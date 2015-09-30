@@ -30,7 +30,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -41,12 +48,58 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin.cs">
+      <DependentUpon>modelo_plantel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Asignatura.cs">
+      <DependentUpon>modelo_plantel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Asistencia.cs">
+      <DependentUpon>modelo_plantel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Curso.cs">
+      <DependentUpon>modelo_plantel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Estudiante.cs">
+      <DependentUpon>modelo_plantel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Jornada.cs">
+      <DependentUpon>modelo_plantel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Matricula.cs">
+      <DependentUpon>modelo_plantel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="modelo_plantel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>modelo_plantel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="modelo_plantel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>modelo_plantel.tt</DependentUpon>
+    </Compile>
     <Compile Include="modelo_plantel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>modelo_plantel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Notificacion.cs">
+      <DependentUpon>modelo_plantel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Padre.cs">
+      <DependentUpon>modelo_plantel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Profesor.cs">
+      <DependentUpon>modelo_plantel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProfesorAsignatura.cs">
+      <DependentUpon>modelo_plantel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Usuario.cs">
+      <DependentUpon>modelo_plantel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="modelo_plantel.edmx">
@@ -56,9 +109,26 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
+    <None Include="modelo_plantel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>modelo_plantel.Context.cs</LastGenOutput>
+      <DependentUpon>modelo_plantel.edmx</DependentUpon>
+    </None>
     <None Include="modelo_plantel.edmx.diagram">
       <DependentUpon>modelo_plantel.edmx</DependentUpon>
     </None>
+    <None Include="modelo_plantel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>modelo_plantel.cs</LastGenOutput>
+      <DependentUpon>modelo_plantel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="modelo_plantel.edmx.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

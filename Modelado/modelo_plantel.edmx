@@ -4,11 +4,353 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="modelo_plantel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
-        <EntityContainer Name="modelo_plantelTargetContainer" >
-        </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+    <Schema Namespace="modelo_plantel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="modelo_plantelStoreContainer">
+    <EntitySet Name="Usuarios" EntityType="modelo_plantel.Store.Usuarios" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Notificaciones" EntityType="modelo_plantel.Store.Notificaciones" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Jornadas" EntityType="modelo_plantel.Store.Jornadas" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Cursos" EntityType="modelo_plantel.Store.Cursos" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Asignaturas" EntityType="modelo_plantel.Store.Asignaturas" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Matriculas" EntityType="modelo_plantel.Store.Matriculas" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Profesores" EntityType="modelo_plantel.Store.Profesores" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Estudiantes" EntityType="modelo_plantel.Store.Estudiantes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Padres" EntityType="modelo_plantel.Store.Padres" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Asistencias" EntityType="modelo_plantel.Store.Asistencias" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Admins" EntityType="modelo_plantel.Store.Admins" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProfesorAsignaturaSet" EntityType="modelo_plantel.Store.ProfesorAsignaturaSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="UsuarioEstudiante" Association="modelo_plantel.Store.UsuarioEstudiante">
+      <End Role="Usuario" EntitySet="Usuarios" />
+      <End Role="Estudiante" EntitySet="Estudiantes" />
+    </AssociationSet>
+    <AssociationSet Name="UsuarioProfesor" Association="modelo_plantel.Store.UsuarioProfesor">
+      <End Role="Usuario" EntitySet="Usuarios" />
+      <End Role="Profesor" EntitySet="Profesores" />
+    </AssociationSet>
+    <AssociationSet Name="UsuarioPadre" Association="modelo_plantel.Store.UsuarioPadre">
+      <End Role="Usuario" EntitySet="Usuarios" />
+      <End Role="Padre" EntitySet="Padres" />
+    </AssociationSet>
+    <AssociationSet Name="UsuarioAdmin" Association="modelo_plantel.Store.UsuarioAdmin">
+      <End Role="Usuario" EntitySet="Usuarios" />
+      <End Role="Admin" EntitySet="Admins" />
+    </AssociationSet>
+    <AssociationSet Name="UsuarioNotificacion" Association="modelo_plantel.Store.UsuarioNotificacion">
+      <End Role="Usuario" EntitySet="Usuarios" />
+      <End Role="Notificacion" EntitySet="Notificaciones" />
+    </AssociationSet>
+    <AssociationSet Name="EstudianteNotificacion" Association="modelo_plantel.Store.EstudianteNotificacion">
+      <End Role="Estudiante" EntitySet="Estudiantes" />
+      <End Role="Notificacion" EntitySet="Notificaciones" />
+    </AssociationSet>
+    <AssociationSet Name="EstudiantePadre" Association="modelo_plantel.Store.EstudiantePadre">
+      <End Role="Estudiante" EntitySet="Estudiantes" />
+      <End Role="Padre" EntitySet="Padres" />
+    </AssociationSet>
+    <AssociationSet Name="ProfesorProfesorAsignatura" Association="modelo_plantel.Store.ProfesorProfesorAsignatura">
+      <End Role="Profesor" EntitySet="Profesores" />
+      <End Role="ProfesorAsignatura" EntitySet="ProfesorAsignaturaSet" />
+    </AssociationSet>
+    <AssociationSet Name="AsignaturaProfesorAsignatura" Association="modelo_plantel.Store.AsignaturaProfesorAsignatura">
+      <End Role="Asignatura" EntitySet="Asignaturas" />
+      <End Role="ProfesorAsignatura" EntitySet="ProfesorAsignaturaSet" />
+    </AssociationSet>
+    <AssociationSet Name="JornadaMatricula" Association="modelo_plantel.Store.JornadaMatricula">
+      <End Role="Jornada" EntitySet="Jornadas" />
+      <End Role="Matricula" EntitySet="Matriculas" />
+    </AssociationSet>
+    <AssociationSet Name="CursoMatricula" Association="modelo_plantel.Store.CursoMatricula">
+      <End Role="Curso" EntitySet="Cursos" />
+      <End Role="Matricula" EntitySet="Matriculas" />
+    </AssociationSet>
+    <AssociationSet Name="ProfesorAsignaturaMatricula" Association="modelo_plantel.Store.ProfesorAsignaturaMatricula">
+      <End Role="ProfesorAsignatura" EntitySet="ProfesorAsignaturaSet" />
+      <End Role="Matricula" EntitySet="Matriculas" />
+    </AssociationSet>
+    <AssociationSet Name="AsistenciaMatricula" Association="modelo_plantel.Store.AsistenciaMatricula">
+      <End Role="Asistencia" EntitySet="Asistencias" />
+      <End Role="Matricula" EntitySet="Matriculas" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Usuarios">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombreusuario" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="fecha_registro" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Notificaciones">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="asunto" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="mensaje" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="fecha_creacion" Type="datetime" Nullable="false" />
+    <Property Name="UsuarioId" Type="int" Nullable="false" />
+    <Property Name="EstudianteId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Jornadas">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre_jornada" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Cursos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre_curso" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Asignaturas">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre_asignatura" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Matriculas">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="fecha_matricula" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="JornadaId" Type="int" Nullable="false" />
+    <Property Name="CursoId" Type="int" Nullable="false" />
+    <Property Name="ProfesorAsignaturaId" Type="int" Nullable="false" />
+    <Property Name="AsistenciaId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Profesores">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombres" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="apellidos" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="rol" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="tdocumento" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ndocumento" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="telefono" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="direccion" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UsuarioId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Estudiantes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombres" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="apellidos" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="tdocumento" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ndocumento" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="fecha_nacimiento" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="telefono" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="direccion" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UsuarioId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Padres">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombres" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="apellidos" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="tdocumento" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ndocumento" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="telefono" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="direccion" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UsuarioId" Type="int" Nullable="false" />
+    <Property Name="EstudianteId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Asistencias">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="estado" Type="bit" Nullable="false" />
+    <Property Name="fecha_asistencia" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Admins">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombres" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="apellidos" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="rol" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="tdocumento" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ndocumento" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="telefono" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="direccion" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UsuarioId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProfesorAsignaturaSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProfesorId" Type="int" Nullable="false" />
+    <Property Name="AsignaturaId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="UsuarioEstudiante">
+    <End Role="Usuario" Type="modelo_plantel.Store.Usuarios" Multiplicity="1" />
+    <End Role="Estudiante" Type="modelo_plantel.Store.Estudiantes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Estudiante">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UsuarioProfesor">
+    <End Role="Usuario" Type="modelo_plantel.Store.Usuarios" Multiplicity="1" />
+    <End Role="Profesor" Type="modelo_plantel.Store.Profesores" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Profesor">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UsuarioPadre">
+    <End Role="Usuario" Type="modelo_plantel.Store.Usuarios" Multiplicity="1" />
+    <End Role="Padre" Type="modelo_plantel.Store.Padres" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Padre">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UsuarioAdmin">
+    <End Role="Usuario" Type="modelo_plantel.Store.Usuarios" Multiplicity="1" />
+    <End Role="Admin" Type="modelo_plantel.Store.Admins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Admin">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UsuarioNotificacion">
+    <End Role="Usuario" Type="modelo_plantel.Store.Usuarios" Multiplicity="1" />
+    <End Role="Notificacion" Type="modelo_plantel.Store.Notificaciones" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Notificacion">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EstudianteNotificacion">
+    <End Role="Estudiante" Type="modelo_plantel.Store.Estudiantes" Multiplicity="1" />
+    <End Role="Notificacion" Type="modelo_plantel.Store.Notificaciones" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Estudiante">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Notificacion">
+        <PropertyRef Name="EstudianteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EstudiantePadre">
+    <End Role="Estudiante" Type="modelo_plantel.Store.Estudiantes" Multiplicity="1" />
+    <End Role="Padre" Type="modelo_plantel.Store.Padres" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Estudiante">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Padre">
+        <PropertyRef Name="EstudianteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProfesorProfesorAsignatura">
+    <End Role="Profesor" Type="modelo_plantel.Store.Profesores" Multiplicity="1" />
+    <End Role="ProfesorAsignatura" Type="modelo_plantel.Store.ProfesorAsignaturaSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Profesor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProfesorAsignatura">
+        <PropertyRef Name="ProfesorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AsignaturaProfesorAsignatura">
+    <End Role="Asignatura" Type="modelo_plantel.Store.Asignaturas" Multiplicity="1" />
+    <End Role="ProfesorAsignatura" Type="modelo_plantel.Store.ProfesorAsignaturaSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Asignatura">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProfesorAsignatura">
+        <PropertyRef Name="AsignaturaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="JornadaMatricula">
+    <End Role="Jornada" Type="modelo_plantel.Store.Jornadas" Multiplicity="1" />
+    <End Role="Matricula" Type="modelo_plantel.Store.Matriculas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Jornada">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Matricula">
+        <PropertyRef Name="JornadaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CursoMatricula">
+    <End Role="Curso" Type="modelo_plantel.Store.Cursos" Multiplicity="1" />
+    <End Role="Matricula" Type="modelo_plantel.Store.Matriculas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Curso">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Matricula">
+        <PropertyRef Name="CursoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProfesorAsignaturaMatricula">
+    <End Role="ProfesorAsignatura" Type="modelo_plantel.Store.ProfesorAsignaturaSet" Multiplicity="1" />
+    <End Role="Matricula" Type="modelo_plantel.Store.Matriculas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProfesorAsignatura">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Matricula">
+        <PropertyRef Name="ProfesorAsignaturaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AsistenciaMatricula">
+    <End Role="Asistencia" Type="modelo_plantel.Store.Asistencias" Multiplicity="1" />
+    <End Role="Matricula" Type="modelo_plantel.Store.Matriculas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Asistencia">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Matricula">
+        <PropertyRef Name="AsistenciaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="modelo_plantel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
@@ -52,6 +394,31 @@
             <End Role="Estudiante" EntitySet="Estudiantes" />
             <End Role="Padre" EntitySet="Padres" />
           </AssociationSet>
+          <EntitySet Name="ProfesorAsignaturaSet" EntityType="modelo_plantel.ProfesorAsignatura" />
+          <AssociationSet Name="ProfesorProfesorAsignatura" Association="modelo_plantel.ProfesorProfesorAsignatura">
+            <End Role="Profesor" EntitySet="Profesores" />
+            <End Role="ProfesorAsignatura" EntitySet="ProfesorAsignaturaSet" />
+          </AssociationSet>
+          <AssociationSet Name="AsignaturaProfesorAsignatura" Association="modelo_plantel.AsignaturaProfesorAsignatura">
+            <End Role="Asignatura" EntitySet="Asignaturas" />
+            <End Role="ProfesorAsignatura" EntitySet="ProfesorAsignaturaSet" />
+          </AssociationSet>
+          <AssociationSet Name="JornadaMatricula" Association="modelo_plantel.JornadaMatricula">
+            <End Role="Jornada" EntitySet="Jornadas" />
+            <End Role="Matricula" EntitySet="Matriculas" />
+          </AssociationSet>
+          <AssociationSet Name="CursoMatricula" Association="modelo_plantel.CursoMatricula">
+            <End Role="Curso" EntitySet="Cursos" />
+            <End Role="Matricula" EntitySet="Matriculas" />
+          </AssociationSet>
+          <AssociationSet Name="ProfesorAsignaturaMatricula" Association="modelo_plantel.ProfesorAsignaturaMatricula">
+            <End Role="ProfesorAsignatura" EntitySet="ProfesorAsignaturaSet" />
+            <End Role="Matricula" EntitySet="Matriculas" />
+          </AssociationSet>
+          <AssociationSet Name="AsistenciaMatricula" Association="modelo_plantel.AsistenciaMatricula">
+            <End Role="Asistencia" EntitySet="Asistencias" />
+            <End Role="Matricula" EntitySet="Matriculas" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Usuario">
           <Key>
@@ -85,6 +452,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nombre_jornada" Type="String" Nullable="false" />
+          <NavigationProperty Name="Matricula" Relationship="modelo_plantel.JornadaMatricula" FromRole="Jornada" ToRole="Matricula" />
         </EntityType>
         <EntityType Name="Curso">
           <Key>
@@ -92,6 +460,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nombre_curso" Type="String" Nullable="false" />
+          <NavigationProperty Name="Matricula" Relationship="modelo_plantel.CursoMatricula" FromRole="Curso" ToRole="Matricula" />
         </EntityType>
         <EntityType Name="Asignatura">
           <Key>
@@ -99,6 +468,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nombre_asignatura" Type="String" Nullable="false" />
+          <NavigationProperty Name="ProfesorAsignatura" Relationship="modelo_plantel.AsignaturaProfesorAsignatura" FromRole="Asignatura" ToRole="ProfesorAsignatura" />
         </EntityType>
         <EntityType Name="Matricula">
           <Key>
@@ -106,6 +476,14 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="fecha_matricula" Type="String" Nullable="false" />
+          <NavigationProperty Name="Jornada" Relationship="modelo_plantel.JornadaMatricula" FromRole="Matricula" ToRole="Jornada" />
+          <Property Name="JornadaId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Curso" Relationship="modelo_plantel.CursoMatricula" FromRole="Matricula" ToRole="Curso" />
+          <Property Name="CursoId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ProfesorAsignatura" Relationship="modelo_plantel.ProfesorAsignaturaMatricula" FromRole="Matricula" ToRole="ProfesorAsignatura" />
+          <Property Name="ProfesorAsignaturaId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Asistencia" Relationship="modelo_plantel.AsistenciaMatricula" FromRole="Matricula" ToRole="Asistencia" />
+          <Property Name="AsistenciaId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Profesor">
           <Key>
@@ -121,6 +499,7 @@
           <Property Name="direccion" Type="String" Nullable="false" />
           <NavigationProperty Name="Usuario" Relationship="modelo_plantel.UsuarioProfesor" FromRole="Profesor" ToRole="Usuario" />
           <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ProfesorAsignatura" Relationship="modelo_plantel.ProfesorProfesorAsignatura" FromRole="Profesor" ToRole="ProfesorAsignatura" />
         </EntityType>
         <EntityType Name="Estudiante">
           <Key>
@@ -162,6 +541,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="estado" Type="Boolean" Nullable="false" />
           <Property Name="fecha_asistencia" Type="String" Nullable="false" />
+          <NavigationProperty Name="Matricula" Relationship="modelo_plantel.AsistenciaMatricula" FromRole="Asistencia" ToRole="Matricula" />
         </EntityType>
         <EntityType Name="Admin">
           <Key>
@@ -262,17 +642,232 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ProfesorAsignatura">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Profesor" Relationship="modelo_plantel.ProfesorProfesorAsignatura" FromRole="ProfesorAsignatura" ToRole="Profesor" />
+          <Property Name="ProfesorId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Asignatura" Relationship="modelo_plantel.AsignaturaProfesorAsignatura" FromRole="ProfesorAsignatura" ToRole="Asignatura" />
+          <Property Name="AsignaturaId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Matricula" Relationship="modelo_plantel.ProfesorAsignaturaMatricula" FromRole="ProfesorAsignatura" ToRole="Matricula" />
+        </EntityType>
+        <Association Name="ProfesorProfesorAsignatura">
+          <End Type="modelo_plantel.Profesor" Role="Profesor" Multiplicity="1" />
+          <End Type="modelo_plantel.ProfesorAsignatura" Role="ProfesorAsignatura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profesor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProfesorAsignatura">
+              <PropertyRef Name="ProfesorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AsignaturaProfesorAsignatura">
+          <End Type="modelo_plantel.Asignatura" Role="Asignatura" Multiplicity="1" />
+          <End Type="modelo_plantel.ProfesorAsignatura" Role="ProfesorAsignatura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asignatura">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProfesorAsignatura">
+              <PropertyRef Name="AsignaturaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="JornadaMatricula">
+          <End Type="modelo_plantel.Jornada" Role="Jornada" Multiplicity="1" />
+          <End Type="modelo_plantel.Matricula" Role="Matricula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jornada">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Matricula">
+              <PropertyRef Name="JornadaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CursoMatricula">
+          <End Type="modelo_plantel.Curso" Role="Curso" Multiplicity="1" />
+          <End Type="modelo_plantel.Matricula" Role="Matricula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Curso">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Matricula">
+              <PropertyRef Name="CursoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProfesorAsignaturaMatricula">
+          <End Type="modelo_plantel.ProfesorAsignatura" Role="ProfesorAsignatura" Multiplicity="1" />
+          <End Type="modelo_plantel.Matricula" Role="Matricula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProfesorAsignatura">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Matricula">
+              <PropertyRef Name="ProfesorAsignaturaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AsistenciaMatricula">
+          <End Type="modelo_plantel.Asistencia" Role="Asistencia" Multiplicity="1" />
+          <End Type="modelo_plantel.Matricula" Role="Matricula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asistencia">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Matricula">
+              <PropertyRef Name="AsistenciaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
-        <Alias Key="Model" Value="modelo_plantel" />
-        <Alias Key="Target" Value="modelo_plantel.Store" />
-        <EntityContainerMapping CdmEntityContainer="modelo_plantelContainer" StorageEntityContainer="modelo_plantelTargetContainer">
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="modelo_plantelStoreContainer" CdmEntityContainer="modelo_plantelContainer">
+    <EntitySetMapping Name="Usuarios">
+      <EntityTypeMapping TypeName="IsTypeOf(modelo_plantel.Usuario)">
+        <MappingFragment StoreEntitySet="Usuarios">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="nombreusuario" ColumnName="nombreusuario" />
+          <ScalarProperty Name="fecha_registro" ColumnName="fecha_registro" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Notificaciones">
+      <EntityTypeMapping TypeName="IsTypeOf(modelo_plantel.Notificacion)">
+        <MappingFragment StoreEntitySet="Notificaciones">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="asunto" ColumnName="asunto" />
+          <ScalarProperty Name="mensaje" ColumnName="mensaje" />
+          <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+          <ScalarProperty Name="EstudianteId" ColumnName="EstudianteId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Jornadas">
+      <EntityTypeMapping TypeName="IsTypeOf(modelo_plantel.Jornada)">
+        <MappingFragment StoreEntitySet="Jornadas">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="nombre_jornada" ColumnName="nombre_jornada" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cursos">
+      <EntityTypeMapping TypeName="IsTypeOf(modelo_plantel.Curso)">
+        <MappingFragment StoreEntitySet="Cursos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="nombre_curso" ColumnName="nombre_curso" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Asignaturas">
+      <EntityTypeMapping TypeName="IsTypeOf(modelo_plantel.Asignatura)">
+        <MappingFragment StoreEntitySet="Asignaturas">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="nombre_asignatura" ColumnName="nombre_asignatura" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Matriculas">
+      <EntityTypeMapping TypeName="IsTypeOf(modelo_plantel.Matricula)">
+        <MappingFragment StoreEntitySet="Matriculas">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="fecha_matricula" ColumnName="fecha_matricula" />
+          <ScalarProperty Name="JornadaId" ColumnName="JornadaId" />
+          <ScalarProperty Name="CursoId" ColumnName="CursoId" />
+          <ScalarProperty Name="ProfesorAsignaturaId" ColumnName="ProfesorAsignaturaId" />
+          <ScalarProperty Name="AsistenciaId" ColumnName="AsistenciaId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Profesores">
+      <EntityTypeMapping TypeName="IsTypeOf(modelo_plantel.Profesor)">
+        <MappingFragment StoreEntitySet="Profesores">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="nombres" ColumnName="nombres" />
+          <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+          <ScalarProperty Name="rol" ColumnName="rol" />
+          <ScalarProperty Name="tdocumento" ColumnName="tdocumento" />
+          <ScalarProperty Name="ndocumento" ColumnName="ndocumento" />
+          <ScalarProperty Name="telefono" ColumnName="telefono" />
+          <ScalarProperty Name="direccion" ColumnName="direccion" />
+          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Estudiantes">
+      <EntityTypeMapping TypeName="IsTypeOf(modelo_plantel.Estudiante)">
+        <MappingFragment StoreEntitySet="Estudiantes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="nombres" ColumnName="nombres" />
+          <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+          <ScalarProperty Name="tdocumento" ColumnName="tdocumento" />
+          <ScalarProperty Name="ndocumento" ColumnName="ndocumento" />
+          <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
+          <ScalarProperty Name="telefono" ColumnName="telefono" />
+          <ScalarProperty Name="direccion" ColumnName="direccion" />
+          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Padres">
+      <EntityTypeMapping TypeName="IsTypeOf(modelo_plantel.Padre)">
+        <MappingFragment StoreEntitySet="Padres">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="nombres" ColumnName="nombres" />
+          <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+          <ScalarProperty Name="tdocumento" ColumnName="tdocumento" />
+          <ScalarProperty Name="ndocumento" ColumnName="ndocumento" />
+          <ScalarProperty Name="telefono" ColumnName="telefono" />
+          <ScalarProperty Name="direccion" ColumnName="direccion" />
+          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+          <ScalarProperty Name="EstudianteId" ColumnName="EstudianteId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Asistencias">
+      <EntityTypeMapping TypeName="IsTypeOf(modelo_plantel.Asistencia)">
+        <MappingFragment StoreEntitySet="Asistencias">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
+          <ScalarProperty Name="fecha_asistencia" ColumnName="fecha_asistencia" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Admins">
+      <EntityTypeMapping TypeName="IsTypeOf(modelo_plantel.Admin)">
+        <MappingFragment StoreEntitySet="Admins">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="nombres" ColumnName="nombres" />
+          <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+          <ScalarProperty Name="rol" ColumnName="rol" />
+          <ScalarProperty Name="tdocumento" ColumnName="tdocumento" />
+          <ScalarProperty Name="ndocumento" ColumnName="ndocumento" />
+          <ScalarProperty Name="telefono" ColumnName="telefono" />
+          <ScalarProperty Name="direccion" ColumnName="direccion" />
+          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProfesorAsignaturaSet">
+      <EntityTypeMapping TypeName="IsTypeOf(modelo_plantel.ProfesorAsignatura)">
+        <MappingFragment StoreEntitySet="ProfesorAsignaturaSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ProfesorId" ColumnName="ProfesorId" />
+          <ScalarProperty Name="AsignaturaId" ColumnName="AsignaturaId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -286,6 +881,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
       </DesignerInfoPropertySet>
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
