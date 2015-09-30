@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="modelo_plantel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
+        <EntityContainer Name="modelo_plantelTargetContainer" >
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="modelo_plantel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="modelo_plantelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Usuarios" EntityType="modelo_plantel.Usuario" />
+          <EntitySet Name="Notificaciones" EntityType="modelo_plantel.Notificacion" />
+          <EntitySet Name="Jornadas" EntityType="modelo_plantel.Jornada" />
+          <EntitySet Name="Cursos" EntityType="modelo_plantel.Curso" />
+          <EntitySet Name="Asignaturas" EntityType="modelo_plantel.Asignatura" />
+          <EntitySet Name="Matriculas" EntityType="modelo_plantel.Matricula" />
+          <EntitySet Name="Profesores" EntityType="modelo_plantel.Profesor" />
+          <EntitySet Name="Estudiantes" EntityType="modelo_plantel.Estudiante" />
+          <EntitySet Name="Padres" EntityType="modelo_plantel.Padre" />
+          <EntitySet Name="Asistencias" EntityType="modelo_plantel.Asistencia" />
+          <EntitySet Name="Admins" EntityType="modelo_plantel.Admin" />
+          <AssociationSet Name="UsuarioEstudiante" Association="modelo_plantel.UsuarioEstudiante">
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="Estudiante" EntitySet="Estudiantes" />
+          </AssociationSet>
+          <AssociationSet Name="UsuarioProfesor" Association="modelo_plantel.UsuarioProfesor">
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="Profesor" EntitySet="Profesores" />
+          </AssociationSet>
+          <AssociationSet Name="UsuarioPadre" Association="modelo_plantel.UsuarioPadre">
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="Padre" EntitySet="Padres" />
+          </AssociationSet>
+          <AssociationSet Name="UsuarioAdmin" Association="modelo_plantel.UsuarioAdmin">
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="Admin" EntitySet="Admins" />
+          </AssociationSet>
+          <AssociationSet Name="UsuarioNotificacion" Association="modelo_plantel.UsuarioNotificacion">
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="Notificacion" EntitySet="Notificaciones" />
+          </AssociationSet>
+          <AssociationSet Name="EstudianteNotificacion" Association="modelo_plantel.EstudianteNotificacion">
+            <End Role="Estudiante" EntitySet="Estudiantes" />
+            <End Role="Notificacion" EntitySet="Notificaciones" />
+          </AssociationSet>
+          <AssociationSet Name="EstudiantePadre" Association="modelo_plantel.EstudiantePadre">
+            <End Role="Estudiante" EntitySet="Estudiantes" />
+            <End Role="Padre" EntitySet="Padres" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombreusuario" Type="String" Nullable="false" />
+          <Property Name="fecha_registro" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Estudiante" Relationship="modelo_plantel.UsuarioEstudiante" FromRole="Usuario" ToRole="Estudiante" />
+          <NavigationProperty Name="Profesor" Relationship="modelo_plantel.UsuarioProfesor" FromRole="Usuario" ToRole="Profesor" />
+          <NavigationProperty Name="Padre" Relationship="modelo_plantel.UsuarioPadre" FromRole="Usuario" ToRole="Padre" />
+          <NavigationProperty Name="Admin" Relationship="modelo_plantel.UsuarioAdmin" FromRole="Usuario" ToRole="Admin" />
+          <NavigationProperty Name="Notificacion" Relationship="modelo_plantel.UsuarioNotificacion" FromRole="Usuario" ToRole="Notificacion" />
+        </EntityType>
+        <EntityType Name="Notificacion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="asunto" Type="String" Nullable="false" />
+          <Property Name="mensaje" Type="String" Nullable="false" />
+          <Property Name="fecha_creacion" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Usuario" Relationship="modelo_plantel.UsuarioNotificacion" FromRole="Notificacion" ToRole="Usuario" />
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Estudiante" Relationship="modelo_plantel.EstudianteNotificacion" FromRole="Notificacion" ToRole="Estudiante" />
+          <Property Name="EstudianteId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Jornada">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_jornada" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Curso">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_curso" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Asignatura">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_asignatura" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Matricula">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fecha_matricula" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Profesor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombres" Type="String" Nullable="false" />
+          <Property Name="apellidos" Type="String" Nullable="false" />
+          <Property Name="rol" Type="String" Nullable="false" />
+          <Property Name="tdocumento" Type="String" Nullable="false" />
+          <Property Name="ndocumento" Type="String" Nullable="false" />
+          <Property Name="telefono" Type="String" Nullable="false" />
+          <Property Name="direccion" Type="String" Nullable="false" />
+          <NavigationProperty Name="Usuario" Relationship="modelo_plantel.UsuarioProfesor" FromRole="Profesor" ToRole="Usuario" />
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Estudiante">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombres" Type="String" Nullable="false" />
+          <Property Name="apellidos" Type="String" Nullable="false" />
+          <Property Name="tdocumento" Type="String" Nullable="false" />
+          <Property Name="ndocumento" Type="String" Nullable="false" />
+          <Property Name="fecha_nacimiento" Type="String" Nullable="false" />
+          <Property Name="telefono" Type="String" Nullable="false" />
+          <Property Name="direccion" Type="String" Nullable="false" />
+          <NavigationProperty Name="Usuario" Relationship="modelo_plantel.UsuarioEstudiante" FromRole="Estudiante" ToRole="Usuario" />
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Notificacion" Relationship="modelo_plantel.EstudianteNotificacion" FromRole="Estudiante" ToRole="Notificacion" />
+          <NavigationProperty Name="Padre" Relationship="modelo_plantel.EstudiantePadre" FromRole="Estudiante" ToRole="Padre" />
+        </EntityType>
+        <EntityType Name="Padre">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombres" Type="String" Nullable="false" />
+          <Property Name="apellidos" Type="String" Nullable="false" />
+          <Property Name="tdocumento" Type="String" Nullable="false" />
+          <Property Name="ndocumento" Type="String" Nullable="false" />
+          <Property Name="telefono" Type="String" Nullable="false" />
+          <Property Name="direccion" Type="String" Nullable="false" />
+          <NavigationProperty Name="Usuario" Relationship="modelo_plantel.UsuarioPadre" FromRole="Padre" ToRole="Usuario" />
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Estudiante" Relationship="modelo_plantel.EstudiantePadre" FromRole="Padre" ToRole="Estudiante" />
+          <Property Name="EstudianteId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Asistencia">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="estado" Type="Boolean" Nullable="false" />
+          <Property Name="fecha_asistencia" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombres" Type="String" Nullable="false" />
+          <Property Name="apellidos" Type="String" Nullable="false" />
+          <Property Name="rol" Type="String" Nullable="false" />
+          <Property Name="tdocumento" Type="String" Nullable="false" />
+          <Property Name="ndocumento" Type="String" Nullable="false" />
+          <Property Name="telefono" Type="String" Nullable="false" />
+          <Property Name="direccion" Type="String" Nullable="false" />
+          <NavigationProperty Name="Usuario" Relationship="modelo_plantel.UsuarioAdmin" FromRole="Admin" ToRole="Usuario" />
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="UsuarioEstudiante">
+          <End Type="modelo_plantel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="modelo_plantel.Estudiante" Role="Estudiante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Estudiante">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UsuarioProfesor">
+          <End Type="modelo_plantel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="modelo_plantel.Profesor" Role="Profesor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Profesor">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UsuarioPadre">
+          <End Type="modelo_plantel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="modelo_plantel.Padre" Role="Padre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Padre">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UsuarioAdmin">
+          <End Type="modelo_plantel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="modelo_plantel.Admin" Role="Admin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Admin">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UsuarioNotificacion">
+          <End Type="modelo_plantel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="modelo_plantel.Notificacion" Role="Notificacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Notificacion">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EstudianteNotificacion">
+          <End Type="modelo_plantel.Estudiante" Role="Estudiante" Multiplicity="1" />
+          <End Type="modelo_plantel.Notificacion" Role="Notificacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estudiante">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Notificacion">
+              <PropertyRef Name="EstudianteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EstudiantePadre">
+          <End Type="modelo_plantel.Estudiante" Role="Estudiante" Multiplicity="1" />
+          <End Type="modelo_plantel.Padre" Role="Padre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estudiante">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Padre">
+              <PropertyRef Name="EstudianteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="modelo_plantel" />
+        <Alias Key="Target" Value="modelo_plantel.Store" />
+        <EntityContainerMapping CdmEntityContainer="modelo_plantelContainer" StorageEntityContainer="modelo_plantelTargetContainer">
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
