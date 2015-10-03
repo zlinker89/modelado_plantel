@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b5a5e1897eca4fc39530ce5f9d048967" Name="Diagram1" >
+        <EntityTypeShape EntityType="modelo_plantel.Usuario" Width="1.5" PointX="0.5" PointY="0.5" />
+        <EntityTypeShape EntityType="modelo_plantel.Notificacion" Width="1.5" PointX="0.5" PointY="6.625" />
+        <EntityTypeShape EntityType="modelo_plantel.Jornada" Width="1.5" PointX="9.625" PointY="0.5" />
+        <EntityTypeShape EntityType="modelo_plantel.Curso" Width="1.5" PointX="7.625" PointY="0.75" />
+        <EntityTypeShape EntityType="modelo_plantel.Asignatura" Width="1.5" PointX="9.125" PointY="5.375" />
+        <EntityTypeShape EntityType="modelo_plantel.Matricula" Width="1.5" PointX="12.125" PointY="0.875" />
+        <EntityTypeShape EntityType="modelo_plantel.Profesor" Width="1.5" PointX="7" PointY="3.25" />
+        <EntityTypeShape EntityType="modelo_plantel.Estudiante" Width="1.5" PointX="2.5" PointY="3.25" />
+        <EntityTypeShape EntityType="modelo_plantel.Padre" Width="1.5" PointX="4.75" PointY="3.25" />
+        <EntityTypeShape EntityType="modelo_plantel.Asistencia" Width="1.5" PointX="9.75" PointY="2.875" />
+        <EntityTypeShape EntityType="modelo_plantel.Admin" Width="1.5" PointX="0.5" PointY="3.5" />
+        <AssociationConnector Association="modelo_plantel.UsuarioEstudiante" />
+        <AssociationConnector Association="modelo_plantel.UsuarioProfesor" />
+        <AssociationConnector Association="modelo_plantel.UsuarioPadre" />
+        <AssociationConnector Association="modelo_plantel.UsuarioAdmin" />
+        <AssociationConnector Association="modelo_plantel.UsuarioNotificacion" />
+        <AssociationConnector Association="modelo_plantel.EstudianteNotificacion" />
+        <AssociationConnector Association="modelo_plantel.EstudiantePadre" />
+        <EntityTypeShape EntityType="modelo_plantel.ProfesorAsignatura" Width="1.5" PointX="13.25" PointY="4.5" />
+        <AssociationConnector Association="modelo_plantel.ProfesorProfesorAsignatura" />
+        <AssociationConnector Association="modelo_plantel.AsignaturaProfesorAsignatura" />
+        <AssociationConnector Association="modelo_plantel.JornadaMatricula" />
+        <AssociationConnector Association="modelo_plantel.CursoMatricula" />
+        <AssociationConnector Association="modelo_plantel.ProfesorAsignaturaMatricula" />
+        <AssociationConnector Association="modelo_plantel.AsistenciaMatricula" />
+        <EntityTypeShape EntityType="modelo_plantel.sysdiagrams" Width="1.5" PointX="3.375" PointY="7.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
