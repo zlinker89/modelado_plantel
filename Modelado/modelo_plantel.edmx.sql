@@ -2,13 +2,13 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 09/30/2015 16:04:05
--- Generated from EDMX file: c:\users\tecnoparque 11\documents\visual studio 2013\Projects\modelado_plantel\Modelado\modelo_plantel.edmx
+-- Date Created: 10/02/2015 11:03:40
+-- Generated from EDMX file: D:\PROYECTOS VISUAL STUDIO 2013\modelado_plantel\Modelado\modelo_plantel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [control_asistencia];
+USE [plantel];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -17,11 +17,89 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[FK_UsuarioEstudiante]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Estudiantes] DROP CONSTRAINT [FK_UsuarioEstudiante];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UsuarioProfesor]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Profesores] DROP CONSTRAINT [FK_UsuarioProfesor];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UsuarioPadre]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Padres] DROP CONSTRAINT [FK_UsuarioPadre];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UsuarioAdmin]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Admins] DROP CONSTRAINT [FK_UsuarioAdmin];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UsuarioNotificacion]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Notificaciones] DROP CONSTRAINT [FK_UsuarioNotificacion];
+GO
+IF OBJECT_ID(N'[dbo].[FK_EstudianteNotificacion]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Notificaciones] DROP CONSTRAINT [FK_EstudianteNotificacion];
+GO
+IF OBJECT_ID(N'[dbo].[FK_EstudiantePadre]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Padres] DROP CONSTRAINT [FK_EstudiantePadre];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ProfesorProfesorAsignatura]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ProfesorAsignaturaSet] DROP CONSTRAINT [FK_ProfesorProfesorAsignatura];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AsignaturaProfesorAsignatura]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ProfesorAsignaturaSet] DROP CONSTRAINT [FK_AsignaturaProfesorAsignatura];
+GO
+IF OBJECT_ID(N'[dbo].[FK_JornadaMatricula]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Matriculas] DROP CONSTRAINT [FK_JornadaMatricula];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CursoMatricula]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Matriculas] DROP CONSTRAINT [FK_CursoMatricula];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ProfesorAsignaturaMatricula]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Matriculas] DROP CONSTRAINT [FK_ProfesorAsignaturaMatricula];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AsistenciaMatricula]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Matriculas] DROP CONSTRAINT [FK_AsistenciaMatricula];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[Usuarios]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Usuarios];
+GO
+IF OBJECT_ID(N'[dbo].[Notificaciones]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Notificaciones];
+GO
+IF OBJECT_ID(N'[dbo].[Jornadas]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Jornadas];
+GO
+IF OBJECT_ID(N'[dbo].[Cursos]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Cursos];
+GO
+IF OBJECT_ID(N'[dbo].[Asignaturas]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Asignaturas];
+GO
+IF OBJECT_ID(N'[dbo].[Matriculas]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Matriculas];
+GO
+IF OBJECT_ID(N'[dbo].[Profesores]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Profesores];
+GO
+IF OBJECT_ID(N'[dbo].[Estudiantes]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Estudiantes];
+GO
+IF OBJECT_ID(N'[dbo].[Padres]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Padres];
+GO
+IF OBJECT_ID(N'[dbo].[Asistencias]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Asistencias];
+GO
+IF OBJECT_ID(N'[dbo].[Admins]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Admins];
+GO
+IF OBJECT_ID(N'[dbo].[ProfesorAsignaturaSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ProfesorAsignaturaSet];
+GO
+IF OBJECT_ID(N'[dbo].[sysdiagrams]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[sysdiagrams];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -31,6 +109,7 @@ GO
 CREATE TABLE [dbo].[Usuarios] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [nombreusuario] nvarchar(max)  NOT NULL,
+    [contrasena] nvarchar(max)  NOT NULL,
     [fecha_registro] datetime  NOT NULL
 );
 GO
@@ -83,7 +162,6 @@ CREATE TABLE [dbo].[Profesores] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [nombres] nvarchar(max)  NOT NULL,
     [apellidos] nvarchar(max)  NOT NULL,
-    [rol] nvarchar(max)  NOT NULL,
     [tdocumento] nvarchar(max)  NOT NULL,
     [ndocumento] nvarchar(max)  NOT NULL,
     [telefono] nvarchar(max)  NOT NULL,
@@ -133,7 +211,6 @@ CREATE TABLE [dbo].[Admins] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [nombres] nvarchar(max)  NOT NULL,
     [apellidos] nvarchar(max)  NOT NULL,
-    [rol] nvarchar(max)  NOT NULL,
     [tdocumento] nvarchar(max)  NOT NULL,
     [ndocumento] nvarchar(max)  NOT NULL,
     [telefono] nvarchar(max)  NOT NULL,
@@ -147,6 +224,16 @@ CREATE TABLE [dbo].[ProfesorAsignaturaSet] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [ProfesorId] int  NOT NULL,
     [AsignaturaId] int  NOT NULL
+);
+GO
+
+-- Creating table 'sysdiagrams'
+CREATE TABLE [dbo].[sysdiagrams] (
+    [name] nvarchar(128)  NOT NULL,
+    [principal_id] int  NOT NULL,
+    [diagram_id] int IDENTITY(1,1) NOT NULL,
+    [version] int  NULL,
+    [definition] varbinary(max)  NULL
 );
 GO
 
@@ -226,6 +313,12 @@ ADD CONSTRAINT [PK_ProfesorAsignaturaSet]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
+-- Creating primary key on [diagram_id] in table 'sysdiagrams'
+ALTER TABLE [dbo].[sysdiagrams]
+ADD CONSTRAINT [PK_sysdiagrams]
+    PRIMARY KEY CLUSTERED ([diagram_id] ASC);
+GO
+
 -- --------------------------------------------------
 -- Creating all FOREIGN KEY constraints
 -- --------------------------------------------------
@@ -237,7 +330,6 @@ ADD CONSTRAINT [FK_UsuarioEstudiante]
     REFERENCES [dbo].[Usuarios]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_UsuarioEstudiante'
 CREATE INDEX [IX_FK_UsuarioEstudiante]
@@ -252,7 +344,6 @@ ADD CONSTRAINT [FK_UsuarioProfesor]
     REFERENCES [dbo].[Usuarios]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_UsuarioProfesor'
 CREATE INDEX [IX_FK_UsuarioProfesor]
@@ -267,7 +358,6 @@ ADD CONSTRAINT [FK_UsuarioPadre]
     REFERENCES [dbo].[Usuarios]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_UsuarioPadre'
 CREATE INDEX [IX_FK_UsuarioPadre]
@@ -282,7 +372,6 @@ ADD CONSTRAINT [FK_UsuarioAdmin]
     REFERENCES [dbo].[Usuarios]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_UsuarioAdmin'
 CREATE INDEX [IX_FK_UsuarioAdmin]
@@ -297,7 +386,6 @@ ADD CONSTRAINT [FK_UsuarioNotificacion]
     REFERENCES [dbo].[Usuarios]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_UsuarioNotificacion'
 CREATE INDEX [IX_FK_UsuarioNotificacion]
@@ -312,7 +400,6 @@ ADD CONSTRAINT [FK_EstudianteNotificacion]
     REFERENCES [dbo].[Estudiantes]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_EstudianteNotificacion'
 CREATE INDEX [IX_FK_EstudianteNotificacion]
@@ -327,7 +414,6 @@ ADD CONSTRAINT [FK_EstudiantePadre]
     REFERENCES [dbo].[Estudiantes]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_EstudiantePadre'
 CREATE INDEX [IX_FK_EstudiantePadre]
@@ -342,7 +428,6 @@ ADD CONSTRAINT [FK_ProfesorProfesorAsignatura]
     REFERENCES [dbo].[Profesores]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_ProfesorProfesorAsignatura'
 CREATE INDEX [IX_FK_ProfesorProfesorAsignatura]
@@ -357,7 +442,6 @@ ADD CONSTRAINT [FK_AsignaturaProfesorAsignatura]
     REFERENCES [dbo].[Asignaturas]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_AsignaturaProfesorAsignatura'
 CREATE INDEX [IX_FK_AsignaturaProfesorAsignatura]
@@ -372,7 +456,6 @@ ADD CONSTRAINT [FK_JornadaMatricula]
     REFERENCES [dbo].[Jornadas]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_JornadaMatricula'
 CREATE INDEX [IX_FK_JornadaMatricula]
@@ -387,7 +470,6 @@ ADD CONSTRAINT [FK_CursoMatricula]
     REFERENCES [dbo].[Cursos]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CursoMatricula'
 CREATE INDEX [IX_FK_CursoMatricula]
@@ -402,7 +484,6 @@ ADD CONSTRAINT [FK_ProfesorAsignaturaMatricula]
     REFERENCES [dbo].[ProfesorAsignaturaSet]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_ProfesorAsignaturaMatricula'
 CREATE INDEX [IX_FK_ProfesorAsignaturaMatricula]
@@ -417,7 +498,6 @@ ADD CONSTRAINT [FK_AsistenciaMatricula]
     REFERENCES [dbo].[Asistencias]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_AsistenciaMatricula'
 CREATE INDEX [IX_FK_AsistenciaMatricula]

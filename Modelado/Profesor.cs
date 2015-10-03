@@ -22,7 +22,6 @@ namespace Modelado
         public int Id { get; set; }
         public string nombres { get; set; }
         public string apellidos { get; set; }
-        public string rol { get; set; }
         public string tdocumento { get; set; }
         public string ndocumento { get; set; }
         public string telefono { get; set; }

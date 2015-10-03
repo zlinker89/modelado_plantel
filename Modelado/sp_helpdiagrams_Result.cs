@@ -10,19 +10,13 @@
 namespace Modelado
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Admin
+    public partial class sp_helpdiagrams_Result
     {
-        public int Id { get; set; }
-        public string nombres { get; set; }
-        public string apellidos { get; set; }
-        public string tdocumento { get; set; }
-        public string ndocumento { get; set; }
-        public string telefono { get; set; }
-        public string direccion { get; set; }
-        public int UsuarioId { get; set; }
-    
-        public virtual Usuario Usuario { get; set; }
+        public string Database { get; set; }
+        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }

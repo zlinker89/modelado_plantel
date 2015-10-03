@@ -25,6 +25,7 @@ namespace Modelado
     
         public int Id { get; set; }
         public string nombreusuario { get; set; }
+        public string contrasena { get; set; }
         public System.DateTime fecha_registro { get; set; }
     
         public virtual ICollection<Estudiante> Estudiante { get; set; }

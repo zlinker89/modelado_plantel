@@ -11,7 +11,8 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Modelado;
 using modelado_plantel.Models;
-
+using modelado_plantel.DTO;
+using AutoMapper;
 namespace modelado_plantel.Controllers
 {
     public class UsuariosController : ApiController
@@ -19,10 +20,22 @@ namespace modelado_plantel.Controllers
         private modelado_plantelContext db = new modelado_plantelContext();
 
         // GET: api/Usuarios
-        public IQueryable<Usuario> GetUsuarios()
+        public IQueryable<UsuarioDTO> GetUsuarios()
         {
-            return db.Usuarios;
+            // Mapper.CreateMap<Usuario, UsuarioDTO>();
+            var usuarios = from u in db.Usuarios
+                           select new UsuarioDTO()
+                           {
+                               Id = u.Id,
+                               nombreusuario = u.nombreusuario,
+                               contrasena = u.contrasena
+                           };
+                           
+                               
+            return usuarios;
         }
+
+        
 
         // GET: api/Usuarios/5
         [ResponseType(typeof(Usuario))]
