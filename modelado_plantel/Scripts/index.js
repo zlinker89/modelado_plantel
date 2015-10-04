@@ -13,7 +13,7 @@
     var padresUri = '/api/Padres/';
     var profesoresUri = '/api/Profesors/';
     var adminsUri = '/api/Admins/';
-
+    
     function ajaxHelper(uri, method, data) {
         self.error(''); // Clear error message
         return $.ajax({
@@ -36,7 +36,6 @@
         ajaxHelper(usuariosUri, 'GET').done(function (data) {
             $('#progreso').hide();
             self.usuarios(data);
-            login(data);
         });
     }
 
@@ -136,7 +135,19 @@
                             for (var a in admins) {
                                 if (usuarioid === admins[a].UsuarioId) {
                                     cont = 0;
-                                    alert("bienvenido admin");
+                                    
+                                    // creamos el objeto con los datos a almacenar en la session 
+                                    var datos = JSON.stringify(admins[a]);
+                                    // Pasamos los datos a la sesion de tipo aplication
+                                    if (localStorage.getItem('alcance') === 'aplication') {
+                                        localStorage.setItem('rol', 4);
+                                        localStorage.setItem('usuario', datos);
+                                    } else {
+                                        sessionStorage.setItem('rol', 4);
+                                        sessionStorage.setItem('usuario', datos);
+                                    }
+                                    location.href = "admin.html";
+
                                 } else { cont++; }
                             }
                             if (cont > 0) {
@@ -150,9 +161,16 @@
         
     }
 
-    self.login = function() {
-        getAllUsuarios();
+    // >>>>>>>---------------------------------------------funciones evento con navegador
+    self.login = function () {
+        ajaxHelper(usuariosUri, 'GET').done(function (data) {
+            $('#progreso').hide();
+            self.usuarios(data);
+            login(data);
+        });
     }
+
+    // >>>>>>>-------------------------------FIN funciones evento con navegador
 };
 
 ko.applyBindings(new ViewModel());
