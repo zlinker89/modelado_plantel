@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/02/2015 11:03:40
+-- Date Created: 10/03/2015 20:02:55
 -- Generated from EDMX file: D:\PROYECTOS VISUAL STUDIO 2013\modelado_plantel\Modelado\modelo_plantel.edmx
 -- --------------------------------------------------
 
@@ -53,8 +53,8 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_ProfesorAsignaturaMatricula]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Matriculas] DROP CONSTRAINT [FK_ProfesorAsignaturaMatricula];
 GO
-IF OBJECT_ID(N'[dbo].[FK_AsistenciaMatricula]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Matriculas] DROP CONSTRAINT [FK_AsistenciaMatricula];
+IF OBJECT_ID(N'[dbo].[FK_MatriculaAsistencia]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Asistencias] DROP CONSTRAINT [FK_MatriculaAsistencia];
 GO
 
 -- --------------------------------------------------
@@ -152,8 +152,7 @@ CREATE TABLE [dbo].[Matriculas] (
     [fecha_matricula] nvarchar(max)  NOT NULL,
     [JornadaId] int  NOT NULL,
     [CursoId] int  NOT NULL,
-    [ProfesorAsignaturaId] int  NOT NULL,
-    [AsistenciaId] int  NOT NULL
+    [ProfesorAsignaturaId] int  NOT NULL
 );
 GO
 
@@ -202,7 +201,8 @@ GO
 CREATE TABLE [dbo].[Asistencias] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [estado] bit  NOT NULL,
-    [fecha_asistencia] nvarchar(max)  NOT NULL
+    [fecha_asistencia] nvarchar(max)  NOT NULL,
+    [MatriculaId] int  NOT NULL
 );
 GO
 
@@ -491,18 +491,18 @@ ON [dbo].[Matriculas]
     ([ProfesorAsignaturaId]);
 GO
 
--- Creating foreign key on [AsistenciaId] in table 'Matriculas'
-ALTER TABLE [dbo].[Matriculas]
-ADD CONSTRAINT [FK_AsistenciaMatricula]
-    FOREIGN KEY ([AsistenciaId])
-    REFERENCES [dbo].[Asistencias]
+-- Creating foreign key on [MatriculaId] in table 'Asistencias'
+ALTER TABLE [dbo].[Asistencias]
+ADD CONSTRAINT [FK_MatriculaAsistencia]
+    FOREIGN KEY ([MatriculaId])
+    REFERENCES [dbo].[Matriculas]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 
--- Creating non-clustered index for FOREIGN KEY 'FK_AsistenciaMatricula'
-CREATE INDEX [IX_FK_AsistenciaMatricula]
-ON [dbo].[Matriculas]
-    ([AsistenciaId]);
+-- Creating non-clustered index for FOREIGN KEY 'FK_MatriculaAsistencia'
+CREATE INDEX [IX_FK_MatriculaAsistencia]
+ON [dbo].[Asistencias]
+    ([MatriculaId]);
 GO
 
 -- --------------------------------------------------

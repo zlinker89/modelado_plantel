@@ -14,16 +14,20 @@ namespace Modelado
     
     public partial class Matricula
     {
+        public Matricula()
+        {
+            this.Asistencia = new HashSet<Asistencia>();
+        }
+    
         public int Id { get; set; }
         public string fecha_matricula { get; set; }
         public int JornadaId { get; set; }
         public int CursoId { get; set; }
         public int ProfesorAsignaturaId { get; set; }
-        public int AsistenciaId { get; set; }
     
         public virtual Jornada Jornada { get; set; }
         public virtual Curso Curso { get; set; }
         public virtual ProfesorAsignatura ProfesorAsignatura { get; set; }
-        public virtual Asistencia Asistencia { get; set; }
+        public virtual ICollection<Asistencia> Asistencia { get; set; }
     }
 }

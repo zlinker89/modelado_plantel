@@ -29,8 +29,8 @@
         <AssociationConnector Association="modelo_plantel.JornadaMatricula" />
         <AssociationConnector Association="modelo_plantel.CursoMatricula" />
         <AssociationConnector Association="modelo_plantel.ProfesorAsignaturaMatricula" />
-        <AssociationConnector Association="modelo_plantel.AsistenciaMatricula" />
         <EntityTypeShape EntityType="modelo_plantel.sysdiagrams" Width="1.5" PointX="3.375" PointY="7.75" />
+        <AssociationConnector Association="modelo_plantel.MatriculaAsistencia" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

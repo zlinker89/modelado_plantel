@@ -67,9 +67,9 @@
       <End Role="ProfesorAsignatura" EntitySet="ProfesorAsignaturaSet" />
       <End Role="Matricula" EntitySet="Matriculas" />
     </AssociationSet>
-    <AssociationSet Name="AsistenciaMatricula" Association="modelo_plantel.Store.AsistenciaMatricula">
-      <End Role="Asistencia" EntitySet="Asistencias" />
+    <AssociationSet Name="MatriculaAsistencia" Association="modelo_plantel.Store.MatriculaAsistencia">
       <End Role="Matricula" EntitySet="Matriculas" />
+      <End Role="Asistencia" EntitySet="Asistencias" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Usuarios">
@@ -122,7 +122,6 @@
     <Property Name="JornadaId" Type="int" Nullable="false" />
     <Property Name="CursoId" Type="int" Nullable="false" />
     <Property Name="ProfesorAsignaturaId" Type="int" Nullable="false" />
-    <Property Name="AsistenciaId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Profesores">
     <Key>
@@ -172,6 +171,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="estado" Type="bit" Nullable="false" />
     <Property Name="fecha_asistencia" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="MatriculaId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Admins">
     <Key>
@@ -348,15 +348,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="AsistenciaMatricula">
-    <End Role="Asistencia" Type="modelo_plantel.Store.Asistencias" Multiplicity="1" />
-    <End Role="Matricula" Type="modelo_plantel.Store.Matriculas" Multiplicity="*" />
+  <Association Name="MatriculaAsistencia">
+    <End Role="Matricula" Type="modelo_plantel.Store.Matriculas" Multiplicity="1" />
+    <End Role="Asistencia" Type="modelo_plantel.Store.Asistencias" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Asistencia">
+      <Principal Role="Matricula">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="Matricula">
-        <PropertyRef Name="AsistenciaId" />
+      <Dependent Role="Asistencia">
+        <PropertyRef Name="MatriculaId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -425,10 +425,6 @@
             <End Role="ProfesorAsignatura" EntitySet="ProfesorAsignaturaSet" />
             <End Role="Matricula" EntitySet="Matriculas" />
           </AssociationSet>
-          <AssociationSet Name="AsistenciaMatricula" Association="modelo_plantel.AsistenciaMatricula">
-            <End Role="Asistencia" EntitySet="Asistencias" />
-            <End Role="Matricula" EntitySet="Matriculas" />
-          </AssociationSet>
           <EntitySet Name="sysdiagrams" EntityType="modelo_plantel.sysdiagrams" />
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -460,6 +456,10 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <AssociationSet Name="MatriculaAsistencia" Association="modelo_plantel.MatriculaAsistencia">
+            <End Role="Matricula" EntitySet="Matriculas" />
+            <End Role="Asistencia" EntitySet="Asistencias" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Usuario">
           <Key>
@@ -524,8 +524,7 @@
           <Property Name="CursoId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ProfesorAsignatura" Relationship="modelo_plantel.ProfesorAsignaturaMatricula" FromRole="Matricula" ToRole="ProfesorAsignatura" />
           <Property Name="ProfesorAsignaturaId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Asistencia" Relationship="modelo_plantel.AsistenciaMatricula" FromRole="Matricula" ToRole="Asistencia" />
-          <Property Name="AsistenciaId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Asistencia" Relationship="modelo_plantel.MatriculaAsistencia" FromRole="Matricula" ToRole="Asistencia" />
         </EntityType>
         <EntityType Name="Profesor">
           <Key>
@@ -582,7 +581,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="estado" Type="Boolean" Nullable="false" />
           <Property Name="fecha_asistencia" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="Matricula" Relationship="modelo_plantel.AsistenciaMatricula" FromRole="Asistencia" ToRole="Matricula" />
+          <NavigationProperty Name="Matricula" Relationship="modelo_plantel.MatriculaAsistencia" FromRole="Asistencia" ToRole="Matricula" />
+          <Property Name="MatriculaId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Admin">
           <Key>
@@ -753,18 +753,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="AsistenciaMatricula">
-          <End Type="modelo_plantel.Asistencia" Role="Asistencia" Multiplicity="1" />
-          <End Type="modelo_plantel.Matricula" Role="Matricula" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Asistencia">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Matricula">
-              <PropertyRef Name="AsistenciaId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -786,6 +774,18 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <Association Name="MatriculaAsistencia">
+          <End Type="modelo_plantel.Matricula" Role="Matricula" Multiplicity="1" />
+          <End Type="modelo_plantel.Asistencia" Role="Asistencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Matricula">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Asistencia">
+              <PropertyRef Name="MatriculaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -846,7 +846,6 @@
           <ScalarProperty Name="JornadaId" ColumnName="JornadaId" />
           <ScalarProperty Name="CursoId" ColumnName="CursoId" />
           <ScalarProperty Name="ProfesorAsignaturaId" ColumnName="ProfesorAsignaturaId" />
-          <ScalarProperty Name="AsistenciaId" ColumnName="AsistenciaId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -900,6 +899,7 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="estado" ColumnName="estado" />
           <ScalarProperty Name="fecha_asistencia" ColumnName="fecha_asistencia" />
+          <ScalarProperty Name="MatriculaId" ColumnName="MatriculaId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

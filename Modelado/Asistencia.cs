@@ -14,15 +14,11 @@ namespace Modelado
     
     public partial class Asistencia
     {
-        public Asistencia()
-        {
-            this.Matricula = new HashSet<Matricula>();
-        }
-    
         public int Id { get; set; }
         public bool estado { get; set; }
         public string fecha_asistencia { get; set; }
+        public int MatriculaId { get; set; }
     
-        public virtual ICollection<Matricula> Matricula { get; set; }
+        public virtual Matricula Matricula { get; set; }
     }
 }
