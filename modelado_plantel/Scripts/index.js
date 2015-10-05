@@ -199,8 +199,11 @@
                     telefono: telefono,
                     direccion: direccion,
                     UsuarioId: item.Id
-                }
-                ajaxHelper(adminsUri, 'POST', admin); // aqui guardo el admin en la base de datos
+                    }
+                    // aqui guardo el admin en la base de datos
+                    ajaxHelper(adminsUri, 'POST', admin).done(function (data) {
+                        self.admins.push(data);
+                    }); 
                 }); 
 
                 
@@ -216,6 +219,7 @@
                 $('#contrasena2').val('');
 
                 Materialize.toast("Datos Guardados.", 5000);
+                
 
             } catch (e) {
                 alert(e);
@@ -225,7 +229,20 @@
         }
     }
 
+    
+
     // >>>>>>>-------------------------------FIN funciones evento con navegador
+    self.deleteAdmin = function (admin) {
+        
+        if(confirm("¿Desea eliminar este usuario?")){
+            ajaxHelper(adminsUri + admin.Id, 'DELETE');
+            Materialize.toast("Se ha eliminado a " + admin.nombres + ".", 5000);
+            self.admins.remove(admin);
+        }
+    }
+
+    // cargamos para mostrar
+    getAllAdmins();
 };
 
 ko.applyBindings(new ViewModel());
