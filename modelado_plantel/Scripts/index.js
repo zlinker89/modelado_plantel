@@ -74,29 +74,15 @@
         var cont = 0; // sirve pra controlar los errores
         var usuarioid;
         for (var u in usuarios) {
+            
             if (usuarios[u].nombreusuario == nombreusaurio && usuarios[u].contrasena == contrasena) {
                 usuarioid = usuarios[u].Id;
                 
-                cont = 0; // con el fin de que se salga de la funcion y no imprima mas de un mensaje de error
-                
-                break;
-            } else { cont++; }
-
-        }
-        switch (rol) {
+                cont = 1; // con el fin de que se salga de la funcion y no imprima mas de un mensaje de error
+                switch (rol) {
                     case "1":
                         ajaxHelper(estudiantesUri, 'GET').done(function (estudiantes) {
-                            $('#progreso').hide();
-                            for (var e in estudiantes) {
-                                if (usuarioid === estudiantes[e].UsuarioId) {
-                                    cont = 0;
-                                    alert("bienvenido estudiante");
-                                } else { cont++; }
-                            }
-                            if (cont > 0) {
-                                self.error("Usuario o contraseña invalidos.");
-                                Materialize.toast("Usuario o contraseña invalidos.", 5000);
-                            }
+
                         });
                         break;
                     case "2":
@@ -134,8 +120,8 @@
                             $('#progreso').hide();
                             for (var a in admins) {
                                 if (usuarioid === admins[a].UsuarioId) {
-                                    cont = 0;
-                                    
+                                    cont = 2;
+
                                     // creamos el objeto con los datos a almacenar en la session 
                                     var datos = JSON.stringify(admins[a]);
                                     // Pasamos los datos a la sesion de tipo aplication
@@ -148,16 +134,26 @@
                                         localStorage.setItem('usuario2', datos);
                                     }
                                     location.href = "admin.html";
-
-                                } else { cont++; }
+                                }
                             }
-                            if (cont > 0) {
+                            if (cont < 2) {
                                 self.error("Usuario o contraseña invalidos.");
                                 Materialize.toast("Usuario o contraseña invalidos.", 5000);
                             }
+
                         });
                         break;
                 }
+
+            }
+            
+
+        }
+        if (cont < 1) {
+            self.error("Usuario o contraseña invalidos.");
+            Materialize.toast("Usuario o contraseña invalidos.", 5000);
+        }
+        
         
         
     }
@@ -193,6 +189,7 @@
                     contrasena: contrasena,
                     fecha_registro: fecha_registro
                 }
+                // aqui guardo el usuario en la base de datos
                 ajaxHelper(usuariosUri, 'POST', usuario).done(function (item) {
                     var admin = {
                     nombres: nombres,
@@ -204,7 +201,7 @@
                     UsuarioId: item.Id
                 }
                 ajaxHelper(adminsUri, 'POST', admin); // aqui guardo el admin en la base de datos
-                }); // aqui guardo el usuario en la base de datos
+                }); 
 
                 
 
