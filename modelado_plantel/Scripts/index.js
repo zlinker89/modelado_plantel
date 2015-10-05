@@ -5,7 +5,11 @@
     self.estudiantes = ko.observableArray();
     self.profesores = ko.observableArray();
     self.padres = ko.observableArray();
+    // admin
     self.admins = ko.observableArray();
+    self.detail = ko.observableArray();
+    self.detail_modificar = ko.observable();
+
     self.error = ko.observable();
 
     var usuariosUri = '/api/Usuarios/';
@@ -167,6 +171,13 @@
         });
     }
 
+    
+
+    
+
+    // >>>>>>>-------------------------------FIN funciones evento con navegador
+
+    // xxxxxxxxxxxxxxxxxxxxxxxxxxx-------------------------------------funciones para admin
     self.addAdmin = function () {
         var nombres = $('#nombres').val();
         var apellidos = $('#apellidos').val();
@@ -179,8 +190,8 @@
         // obtengo la fecha de hoy
         var d = new Date();
         var fecha_registro = d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
-        
-        if(contrasena !== contrasena2){
+
+        if (contrasena !== contrasena2) {
             Materialize.toast("Las contraseñas no son iguales.", 5000);
         } else {
             try {
@@ -192,21 +203,21 @@
                 // aqui guardo el usuario en la base de datos
                 ajaxHelper(usuariosUri, 'POST', usuario).done(function (item) {
                     var admin = {
-                    nombres: nombres,
-                    apellidos: apellidos,
-                    tdocumento: tdocumento,
-                    ndocumento: documento,
-                    telefono: telefono,
-                    direccion: direccion,
-                    UsuarioId: item.Id
+                        nombres: nombres,
+                        apellidos: apellidos,
+                        tdocumento: tdocumento,
+                        ndocumento: documento,
+                        telefono: telefono,
+                        direccion: direccion,
+                        UsuarioId: item.Id
                     }
                     // aqui guardo el admin en la base de datos
                     ajaxHelper(adminsUri, 'POST', admin).done(function (data) {
                         self.admins.push(data);
-                    }); 
-                }); 
+                    });
+                });
 
-                
+
 
                 // lipiamos el formulario
                 $('#nombres').val('');
@@ -219,27 +230,123 @@
                 $('#contrasena2').val('');
 
                 Materialize.toast("Datos Guardados.", 5000);
-                
+
 
             } catch (e) {
-                alert(e);
                 Materialize.toast("No se ha podido guardar los datos.", 5000);
             }
 
         }
     }
 
-    
-
-    // >>>>>>>-------------------------------FIN funciones evento con navegador
     self.deleteAdmin = function (admin) {
+        // obtengo la session del usuario y verifico si es el root o el admin
+        var usuario = JSON.parse(localStorage.getItem('usuario')) || JSON.parse(localStorage.getItem('usuario2'));
+        if (usuario.UsuarioId === 1 || usuario.UsuarioId === 2) {
+            if (confirm("¿Desea eliminar este usuario?")) {
+                ajaxHelper(adminsUri + admin.Id, 'DELETE');
+                Materialize.toast("Se ha eliminado a " + admin.nombres + ".", 5000);
+                self.admins.remove(admin);
+            }
+        } else {
+            Materialize.toast("Debe acceder como root o admin\n para realizar esta operacion. ");
+        }
         
-        if(confirm("¿Desea eliminar este usuario?")){
-            ajaxHelper(adminsUri + admin.Id, 'DELETE');
-            Materialize.toast("Se ha eliminado a " + admin.nombres + ".", 5000);
-            self.admins.remove(admin);
+    }
+
+    self.borrarAdmin = function() {
+        ajaxHelper(adminsUri, 'GET').done(function (admins) {
+            var documento = $('#numero').val();
+            var encontrado = false;
+            for (a in admins) {
+                if (admins[a].ndocumento === documento) {
+                    if (confirm("¿Desea eliminar este usuario?")) {
+                        ajaxHelper(adminsUri + admins[a].Id, 'DELETE');
+                        Materialize.toast("Se ha eliminado a " + admins[a].nombres + ".", 5000);
+                        self.admins.remove(admins[a]);
+                        self.detail_modificar(null);
+                    }
+                    encontrado = true;
+
+                }
+            }
+            $('#progreso').hide();
+            if (!encontrado) {
+                Materialize.toast("No existe este admin para mostrar. ");
+            }
+        });
+    }
+    self.detalleAdmin = function (admin) {
+        // extrae el admin del array de objetos y lo independiza 
+        self.detail(admin);
+    }
+
+    self.updateAdmin = function () {
+        var nombres = $('#nnombres').val();
+        var apellidos = $('#napellidos').val();
+        var documento = $('#ndocumento').val();
+        var tdocumento = $('#ntdocumento').val();
+        var direccion = $('#ndireccion').val();
+        var telefono = $('#ntelefono').val();
+        var Id = $('#id').val();
+        var UsuarioId = $('#uid').val();
+
+        try {
+            
+           
+            var admin = {
+                    Id: Id,
+                    nombres: nombres,
+                    apellidos: apellidos,
+                    tdocumento: tdocumento,
+                    ndocumento: documento,
+                    telefono: telefono,
+                    direccion: direccion,
+                    UsuarioId: UsuarioId
+            }
+
+                // aqui guardo el admin en la base de datos
+                ajaxHelper(adminsUri + Id, 'PUT', admin).done(function () {
+                    $('#progreso').hide();
+                });
+
+
+
+            // lipiamos el formulario
+            $('#nnombres').val('');
+            $('#napellidos').val('');
+            $('#ndocumento').val('');
+            $('#ntdocumento').val('');
+            $('#ndireccion').val('');
+            $('#ntelefono').val('');
+
+            self.detail_modificar(null);
+            Materialize.toast("Datos Modificados.", 5000);
+
+
+        } catch (e) {
+            Materialize.toast("No se ha podido guardar los datos.", 5000);
+            $('#progreso').hide();
+
         }
     }
+    self.consultaAdmin = function() {
+        ajaxHelper(adminsUri, 'GET').done(function (admins) {
+            var documento = $('#numero').val();
+            var encontrado = false;
+            for (a in admins) {
+                if(admins[a].ndocumento === documento){
+                    self.detail_modificar(admins[a]);
+                    encontrado = true;
+                }
+            }
+            $('#progreso').hide();
+            if (!encontrado) {
+                Materialize.toast("No existe este admin para mostrar. ");
+            }
+        });
+    }
+    // xxxxxxxxxxxxxxxxxxxxxxxxxxx----------------------------------FIN---funciones para admin
 
     // cargamos para mostrar
     getAllAdmins();

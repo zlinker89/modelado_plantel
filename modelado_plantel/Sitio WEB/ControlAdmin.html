@@ -113,23 +113,112 @@
                 </li>
                 <li>
                     <div class="collapsible-header"><i class="material-icons">search</i>Buscar por documento</div>
-                    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+                    <div class="collapsible-body">
+                        <div class="col s12">
+                            <form class="s12 form-inline" data-bind="submit: consultaAdmin">
+                                <div class="row col s12">
+                                    <div class="input-field col row s12">
+                                        <input id="numero" type="text" class="validate"  required>
+                                        <label for="numero">Documento:</label>
+                                        <button type="submit" class="btn btn-primary waves-light waves-effect">Consultar</button>
+                                        <!--ko if:detail_modificar()-->
+                                        <button type="button" class="btn btn-danger waves-light waves-effect" data-bind="click: borrarAdmin">Eliminar</button>
+                                        <!--/ko-->
+                                    </div>
+                                    <div id="progreso" class="s12 center">
+                                        <div class="preloader-wrapper big active">
+                                            <div class="spinner-layer spinner-blue">
+                                                <div class="circle-clipper left">
+                                                    <div class="circle"></div>
+                                                </div><div class="gap-patch">
+                                                    <div class="circle"></div>
+                                                </div><div class="circle-clipper right">
+                                                    <div class="circle"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- ko if:detail_modificar() -->
+                        <div class="col s12">
+                            <form class="s12" data-bind="submit: updateAdmin">
+                                <div class="row col s12">
+                                    <div class="input-field col s6">
+                                        <input id="nnombres" type="text" class="validate" data-bind="value:detail_modificar().nombres" required>
+                                        <label for="nnombres">Nombres:</label>
+                                    </div>
+                                    <div class="input-field col s6">
+                                        <input id="napellidos" type="text" class="validate" data-bind="value:detail_modificar().apellidos" required>
+                                        <label for="napellidos">Apellidos:</label>
+                                    </div>
+                                </div>
+                                <div class="row col s12 l9">
+                                    <div class="input-field col s5">
+                                        <input id="ntdocumento" type="text" class="validate" data-bind="value:detail_modificar().tdocumento" readonly>
+                                        <label for="ntdocumento">Tipo de Documento:</label>
+                                    </div>
+                                    <div class="input-field col s7">
+                                        <input id="ndocumento" type="text" class="validate" data-bind="value:detail_modificar().ndocumento" readonly>
+                                        <label for="ndocumento">Documento:</label>
+                                    </div>
+                                </div>
+                                <div class="row col s12">
+                                    <div class="input-field col s12">
+                                        <input id="ndireccion" type="text" class="validate" data-bind="value:detail_modificar().direccion" required>
+                                        <label for="ndireccion">Direccion:</label>
+                                    </div>
+                                </div>
+                                <div class="row col s12">
+                                    <div class="input-field col s12">
+                                        <input id="ntelefono" type="text" class="validate" data-bind="value:detail_modificar().telefono" required>
+                                        <label for="ntelefono">Telefono:</label>
+                                    </div>
+                                </div>
+                                <div class="row col s12">
+                                    <div class="input-field col s12">
+                                        <input id="id" type="hidden" class="validate" data-bind="value:detail_modificar().Id" required>
+                                        <input id="uid" type="hidden" class="validate" data-bind="value:detail_modificar().UsuarioId" required>                 
+                                    </div>
+                                </div>
+                                <div class="row col s12 center">
+                                    <button type="submit" class="btn btn-default">Modificar</button>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /ko -->
+                    </div>
                 </li>
                 <li>
                     <div class="collapsible-header"><i class="material-icons">list</i>Listar todo</div>
                     <div class="collapsible-body">
                         <div class="row col s12">
-                            <a href="#!" class="btn" id="btnmostrar">Listar Administradores</a>
+                            <a href="#" class="btn waves-effect waves-light" id="btnmostrar">Listar Administradores</a>
                         </div>
                         <div class="row col s12">
                             <ul class="collection with-header" id="listado" data-bind="foreach: admins">
                                 <li class="collection-item">
                                 <div>
                                     <span data-bind="text: nombres"></span> <span class="hide-on-small-only" data-bind="text: apellidos"></span>
-                                    <a href="#!" class="secondary-content" data-bind="click: $parent.deleteAdmin"><i class="material-icons">delete</i></a>
+                                    <a class="secondary-content modal-trigger" href="#modal1" onclick="modal();" data-bind="click: $parent.detalleAdmin"><i class="material-icons">info_outline</i></a>
+                                    <a href="#modal1" class="secondary-content" data-bind="click: $parent.deleteAdmin"><i class="material-icons">delete</i></a>
                                 </div>
                                 </li>   
                             </ul>
+                        </div>
+                        <!-- Modal Structure -->
+                        <div id="modal1" class="modal bottom-sheet">
+                            <div class="modal-content">
+                                <h5><span data-bind="text:detail().nombres">content</span> <span data-bind="text:detail().apellidos">content</span></h5>
+                                <h6><span data-bind="text: detail().ndocumento"></span><span data-bind="text: detail().tdocumento"></span></h6>
+                                <h6 data-bind="text: detail().direccion"></h6>
+                                <h6 data-bind="text: detail().telefono"></h6>
+                                
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cerrar</a>
+                            </div>
                         </div>
                     </div>
                 </li>
@@ -156,8 +245,10 @@
             Materialize.showStaggeredList('#listado');
         });
         var options = [{ selector: '#listado', offset: 50, callback: 'Materialize.showStaggeredList("#listado")' }]; 
-            Materialize.scrollFire(options);
+        Materialize.scrollFire(options);
+        $('#progreso').hide();
         $('.tooltipped').tooltip({ delay: 50 });
+        $('.modal-trigger').leanModal();
         $('select').material_select();
         $(".button-collapse").sideNav();
         $(".cerrar").click(logout);
@@ -170,5 +261,8 @@
     function logout() {
         localStorage.clear();
         location.href = "index.html";
+    }
+    function modal() {
+        $('#modal1').openModal();
     }
 </script>
