@@ -17,8 +17,8 @@ function casilla() {
 }
 
 function verificarCasilla() {
-    if (localStorage.getItem('alcance') !== undefined) {
-        if (localStorage.getItem('usuario') !== undefined) {
+    if (localStorage.getItem('alcance') !== null) {
+        if (localStorage.getItem('usuario') !== null) {
             var rol = localStorage.getItem('rol');
             switch (rol) {
                 case "4":

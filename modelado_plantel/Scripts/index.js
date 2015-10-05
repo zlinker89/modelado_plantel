@@ -139,12 +139,13 @@
                                     // creamos el objeto con los datos a almacenar en la session 
                                     var datos = JSON.stringify(admins[a]);
                                     // Pasamos los datos a la sesion de tipo aplication
-                                    if (localStorage.getItem('alcance') === 'aplication') {
+                                    if (localStorage.getItem('alcance') !== undefined) {
                                         localStorage.setItem('rol', 4);
                                         localStorage.setItem('usuario', datos);
                                     } else {
-                                        sessionStorage.setItem('rol', 4);
-                                        sessionStorage.setItem('usuario', datos);
+                                        // esto porque sessionStorage no funciona en otra pagina
+                                        localStorage.setItem('rol2', 4);
+                                        localStorage.setItem('usuario2', datos);
                                     }
                                     location.href = "admin.html";
 
@@ -168,6 +169,63 @@
             self.usuarios(data);
             login(data);
         });
+    }
+
+    self.addAdmin = function () {
+        var nombres = $('#nombres').val();
+        var apellidos = $('#apellidos').val();
+        var documento = $('#documento').val();
+        var tdocumento = $('#tdocumento').val();
+        var direccion = $('#direccion').val();
+        var telefono = $('#telefono').val();
+        var contrasena = $('#contrasena').val();
+        var contrasena2 = $('#contrasena2').val();
+        // obtengo la fecha de hoy
+        var d = new Date();
+        var fecha_registro = d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+        
+        if(contrasena !== contrasena2){
+            Materialize.toast("Las contraseñas no son iguales.", 5000);
+        } else {
+            try {
+                var usuario = {
+                    nombreusuario: documento,
+                    contrasena: contrasena,
+                    fecha_registro: fecha_registro
+                }
+                ajaxHelper(usuariosUri, 'POST', usuario).done(function (item) {
+                    var admin = {
+                    nombres: nombres,
+                    apellidos: apellidos,
+                    tdocumento: tdocumento,
+                    ndocumento: documento,
+                    telefono: telefono,
+                    direccion: direccion,
+                    UsuarioId: item.Id
+                }
+                ajaxHelper(adminsUri, 'POST', admin); // aqui guardo el admin en la base de datos
+                }); // aqui guardo el usuario en la base de datos
+
+                
+
+                // lipiamos el formulario
+                $('#nombres').val('');
+                $('#apellidos').val('');
+                $('#documento').val('');
+                $('#tdocumento').val('');
+                $('#direccion').val('');
+                $('#telefono').val('');
+                $('#contrasena').val('');
+                $('#contrasena2').val('');
+
+                Materialize.toast("Datos Guardados.", 5000);
+
+            } catch (e) {
+                alert(e);
+                Materialize.toast("No se ha podido guardar los datos.", 5000);
+            }
+
+        }
     }
 
     // >>>>>>>-------------------------------FIN funciones evento con navegador
