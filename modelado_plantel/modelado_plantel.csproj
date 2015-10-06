@@ -211,6 +211,7 @@
     <Compile Include="Controllers\JornadasController.cs" />
     <Compile Include="Controllers\MatriculasController.cs" />
     <Compile Include="Controllers\NotificacionsController.cs" />
+    <Compile Include="Controllers\PadreEstudianteController.cs" />
     <Compile Include="Controllers\PadresController.cs" />
     <Compile Include="Controllers\ProfesorAsignaturasController.cs" />
     <Compile Include="Controllers\ProfesorsController.cs" />
@@ -218,6 +219,7 @@
     <Compile Include="DTO\AdminDTO.cs" />
     <Compile Include="DTO\EstudianteDTO.cs" />
     <Compile Include="DTO\PadreDTO.cs" />
+    <Compile Include="DTO\PadreEstudianteDTO.cs" />
     <Compile Include="DTO\ProfesorDTO.cs" />
     <Compile Include="DTO\UsuarioDTO.cs" />
     <Compile Include="Global.asax.cs">
@@ -307,6 +309,7 @@
     <Content Include="Sitio WEB\admin.html" />
     <Content Include="Sitio WEB\ControlAdmin.html" />
     <Content Include="Sitio WEB\ControlEstudiante.html" />
+    <Content Include="Sitio WEB\ControlPadres.html" />
     <Content Include="Sitio WEB\ControlProfesor.html" />
     <Content Include="Sitio WEB\index.html" />
     <Content Include="Web.config" />

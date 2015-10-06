@@ -49,6 +49,8 @@ namespace modelado_plantel.Models
         modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 
     }
+
+        public System.Data.Entity.DbSet<Modelado.EstudiantePadre> EstudiantePadres { get; set; }
     
     }
 }
