@@ -537,6 +537,7 @@
         var tdocumento = $('#tdocumento').val();
         var direccion = $('#direccion').val();
         var telefono = $('#telefono').val();
+        var fecha_nacimiento = $('#fecha_nacimiento').val();
         var contrasena = $('#contrasena').val();
         var contrasena2 = $('#contrasena2').val();
         // obtengo la fecha de hoy
@@ -560,6 +561,7 @@
                         tdocumento: tdocumento,
                         ndocumento: documento,
                         telefono: telefono,
+                        fecha_nacimiento: fecha_nacimiento,
                         direccion: direccion,
                         UsuarioId: item.Id
                     }
@@ -580,6 +582,7 @@
                 $('#telefono').val('');
                 $('#contrasena').val('');
                 $('#contrasena2').val('');
+                $('#fecha_nacimiento').val('');
 
                 Materialize.toast("Datos Guardados.", 5000);
 
@@ -643,6 +646,7 @@
         var apellidos = $('#napellidos').val();
         var documento = $('#ndocumento').val();
         var tdocumento = $('#ntdocumento').val();
+        var fecha_nacimiento = $('#nfecha_nacimiento').val();
         var direccion = $('#ndireccion').val();
         var telefono = $('#ntelefono').val();
         var Id = $('#id').val();
@@ -657,6 +661,7 @@
                 apellidos: apellidos,
                 tdocumento: tdocumento,
                 ndocumento: documento,
+                fecha_nacimiento: fecha_nacimiento,
                 telefono: telefono,
                 direccion: direccion,
                 UsuarioId: UsuarioId
@@ -676,6 +681,7 @@
             $('#ntdocumento').val('');
             $('#ndireccion').val('');
             $('#ntelefono').val('');
+            $('#nfecha_nacimiento').val('');
 
             self.detail_modificar(null);
             Materialize.toast("Datos Modificados.", 5000);

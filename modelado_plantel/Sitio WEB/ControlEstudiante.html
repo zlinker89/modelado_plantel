@@ -67,8 +67,8 @@
                                     <div class="row col s12 l3">
                                         <div class="input-field col s12" style="z-index:2;">
                                             <select id="tdocumento">
-                                                <option value="CC">CC</option>
                                                 <option value="TI">TI</option>
+                                                <option value="CC">CC</option>
                                                 <option value="CE">CE</option>
                                             </select>
                                             <label>Tipo de documento:</label>
@@ -78,6 +78,12 @@
                                         <div class="input-field col s12">
                                             <input id="documento" type="text" class="validate" required>
                                             <label for="documento">Documento:</label>
+                                        </div>
+                                    </div>
+                                    <div class="row col s12">
+                                        <div class="input-field col s12">
+                                            <input id="fecha_nacimiento" type="date" class="validate datepicker" required>
+                                            <label for="fecha_nacimiento">Fecha de nacimiento:</label>
                                         </div>
                                     </div>
                                     <div class="row col s12">
@@ -167,6 +173,12 @@
                                 </div>
                                 <div class="row col s12">
                                     <div class="input-field col s12">
+                                        <input id="nfecha_nacimiento" type="text" onclick="fecha();" data-bind="value:detail_modificar().fecha_nacimiento" class="validate datepicker" required>
+                                        <label for="nfecha_nacimiento">Fecha de nacimiento:</label>
+                                    </div>
+                                </div>
+                                <div class="row col s12">
+                                    <div class="input-field col s12">
                                         <input id="ndireccion" type="text" class="validate" data-bind="value:detail_modificar().direccion" required>
                                         <label for="ndireccion">Direccion:</label>
                                     </div>
@@ -247,6 +259,10 @@
         });
         var options = [{ selector: '#listado', offset: 50, callback: 'Materialize.showStaggeredList("#listado")' }];
         Materialize.scrollFire(options);
+        $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15 // Creates a dropdown of 15 years to control year
+        });
         $('#progreso').hide();
         $('.tooltipped').tooltip({ delay: 50 });
         $('.modal-trigger').leanModal();
@@ -259,6 +275,12 @@
 
 
     // esta funcion cierra la sesion, limpando el localstorage y retorna al index
+    function fecha() {
+        $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15 // Creates a dropdown of 15 years to control year
+        });
+    }
     function logout() {
         localStorage.clear();
         location.href = "index.html";

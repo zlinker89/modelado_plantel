@@ -14,6 +14,11 @@ namespace Modelado
     
     public partial class Padre
     {
+        public Padre()
+        {
+            this.EstudiantePadre = new HashSet<EstudiantePadre>();
+        }
+    
         public int Id { get; set; }
         public string nombres { get; set; }
         public string apellidos { get; set; }
@@ -22,9 +27,8 @@ namespace Modelado
         public string telefono { get; set; }
         public string direccion { get; set; }
         public int UsuarioId { get; set; }
-        public int EstudianteId { get; set; }
     
         public virtual Usuario Usuario { get; set; }
-        public virtual Estudiante Estudiante { get; set; }
+        public virtual ICollection<EstudiantePadre> EstudiantePadre { get; set; }
     }
 }

@@ -32,8 +32,7 @@ namespace modelado_plantel.Controllers
                              ndocumento = p.ndocumento,
                              direccion = p.direccion,
                              telefono = p.telefono,
-                             UsuarioId = p.UsuarioId,
-                             EstudianteId = p.EstudianteId
+                             UsuarioId = p.UsuarioId
                          };
             return padres;
         }

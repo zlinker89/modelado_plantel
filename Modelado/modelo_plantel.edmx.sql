@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/03/2015 20:02:55
+-- Date Created: 10/05/2015 19:40:23
 -- Generated from EDMX file: D:\PROYECTOS VISUAL STUDIO 2013\modelado_plantel\Modelado\modelo_plantel.edmx
 -- --------------------------------------------------
 
@@ -35,9 +35,6 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_EstudianteNotificacion]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Notificaciones] DROP CONSTRAINT [FK_EstudianteNotificacion];
 GO
-IF OBJECT_ID(N'[dbo].[FK_EstudiantePadre]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Padres] DROP CONSTRAINT [FK_EstudiantePadre];
-GO
 IF OBJECT_ID(N'[dbo].[FK_ProfesorProfesorAsignatura]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[ProfesorAsignaturaSet] DROP CONSTRAINT [FK_ProfesorProfesorAsignatura];
 GO
@@ -55,6 +52,12 @@ IF OBJECT_ID(N'[dbo].[FK_ProfesorAsignaturaMatricula]', 'F') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[FK_MatriculaAsistencia]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Asistencias] DROP CONSTRAINT [FK_MatriculaAsistencia];
+GO
+IF OBJECT_ID(N'[dbo].[FK_EstudianteEstudiantePadre]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[EstudiantePadreSet] DROP CONSTRAINT [FK_EstudianteEstudiantePadre];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PadreEstudiantePadre]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[EstudiantePadreSet] DROP CONSTRAINT [FK_PadreEstudiantePadre];
 GO
 
 -- --------------------------------------------------
@@ -99,6 +102,9 @@ IF OBJECT_ID(N'[dbo].[ProfesorAsignaturaSet]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[sysdiagrams]', 'U') IS NOT NULL
     DROP TABLE [dbo].[sysdiagrams];
+GO
+IF OBJECT_ID(N'[dbo].[EstudiantePadreSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[EstudiantePadreSet];
 GO
 
 -- --------------------------------------------------
@@ -192,8 +198,7 @@ CREATE TABLE [dbo].[Padres] (
     [ndocumento] nvarchar(max)  NOT NULL,
     [telefono] nvarchar(max)  NOT NULL,
     [direccion] nvarchar(max)  NOT NULL,
-    [UsuarioId] int  NOT NULL,
-    [EstudianteId] int  NOT NULL
+    [UsuarioId] int  NOT NULL
 );
 GO
 
@@ -234,6 +239,14 @@ CREATE TABLE [dbo].[sysdiagrams] (
     [diagram_id] int IDENTITY(1,1) NOT NULL,
     [version] int  NULL,
     [definition] varbinary(max)  NULL
+);
+GO
+
+-- Creating table 'EstudiantePadreSet'
+CREATE TABLE [dbo].[EstudiantePadreSet] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [EstudianteId] int  NOT NULL,
+    [PadreId] int  NOT NULL
 );
 GO
 
@@ -317,6 +330,12 @@ GO
 ALTER TABLE [dbo].[sysdiagrams]
 ADD CONSTRAINT [PK_sysdiagrams]
     PRIMARY KEY CLUSTERED ([diagram_id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'EstudiantePadreSet'
+ALTER TABLE [dbo].[EstudiantePadreSet]
+ADD CONSTRAINT [PK_EstudiantePadreSet]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
 -- --------------------------------------------------
@@ -407,20 +426,6 @@ ON [dbo].[Notificaciones]
     ([EstudianteId]);
 GO
 
--- Creating foreign key on [EstudianteId] in table 'Padres'
-ALTER TABLE [dbo].[Padres]
-ADD CONSTRAINT [FK_EstudiantePadre]
-    FOREIGN KEY ([EstudianteId])
-    REFERENCES [dbo].[Estudiantes]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- Creating non-clustered index for FOREIGN KEY 'FK_EstudiantePadre'
-CREATE INDEX [IX_FK_EstudiantePadre]
-ON [dbo].[Padres]
-    ([EstudianteId]);
-GO
-
 -- Creating foreign key on [ProfesorId] in table 'ProfesorAsignaturaSet'
 ALTER TABLE [dbo].[ProfesorAsignaturaSet]
 ADD CONSTRAINT [FK_ProfesorProfesorAsignatura]
@@ -503,6 +508,34 @@ ADD CONSTRAINT [FK_MatriculaAsistencia]
 CREATE INDEX [IX_FK_MatriculaAsistencia]
 ON [dbo].[Asistencias]
     ([MatriculaId]);
+GO
+
+-- Creating foreign key on [EstudianteId] in table 'EstudiantePadreSet'
+ALTER TABLE [dbo].[EstudiantePadreSet]
+ADD CONSTRAINT [FK_EstudianteEstudiantePadre]
+    FOREIGN KEY ([EstudianteId])
+    REFERENCES [dbo].[Estudiantes]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_EstudianteEstudiantePadre'
+CREATE INDEX [IX_FK_EstudianteEstudiantePadre]
+ON [dbo].[EstudiantePadreSet]
+    ([EstudianteId]);
+GO
+
+-- Creating foreign key on [PadreId] in table 'EstudiantePadreSet'
+ALTER TABLE [dbo].[EstudiantePadreSet]
+ADD CONSTRAINT [FK_PadreEstudiantePadre]
+    FOREIGN KEY ([PadreId])
+    REFERENCES [dbo].[Padres]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_PadreEstudiantePadre'
+CREATE INDEX [IX_FK_PadreEstudiantePadre]
+ON [dbo].[EstudiantePadreSet]
+    ([PadreId]);
 GO
 
 -- --------------------------------------------------

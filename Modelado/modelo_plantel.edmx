@@ -19,6 +19,7 @@
     <EntitySet Name="Admins" EntityType="modelo_plantel.Store.Admins" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProfesorAsignaturaSet" EntityType="modelo_plantel.Store.ProfesorAsignaturaSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="sysdiagrams" EntityType="modelo_plantel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="EstudiantePadreSet" EntityType="modelo_plantel.Store.EstudiantePadreSet" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="UsuarioEstudiante" Association="modelo_plantel.Store.UsuarioEstudiante">
       <End Role="Usuario" EntitySet="Usuarios" />
       <End Role="Estudiante" EntitySet="Estudiantes" />
@@ -43,10 +44,6 @@
       <End Role="Estudiante" EntitySet="Estudiantes" />
       <End Role="Notificacion" EntitySet="Notificaciones" />
     </AssociationSet>
-    <AssociationSet Name="EstudiantePadre" Association="modelo_plantel.Store.EstudiantePadre">
-      <End Role="Estudiante" EntitySet="Estudiantes" />
-      <End Role="Padre" EntitySet="Padres" />
-    </AssociationSet>
     <AssociationSet Name="ProfesorProfesorAsignatura" Association="modelo_plantel.Store.ProfesorProfesorAsignatura">
       <End Role="Profesor" EntitySet="Profesores" />
       <End Role="ProfesorAsignatura" EntitySet="ProfesorAsignaturaSet" />
@@ -70,6 +67,14 @@
     <AssociationSet Name="MatriculaAsistencia" Association="modelo_plantel.Store.MatriculaAsistencia">
       <End Role="Matricula" EntitySet="Matriculas" />
       <End Role="Asistencia" EntitySet="Asistencias" />
+    </AssociationSet>
+    <AssociationSet Name="EstudianteEstudiantePadre" Association="modelo_plantel.Store.EstudianteEstudiantePadre">
+      <End Role="Estudiante" EntitySet="Estudiantes" />
+      <End Role="EstudiantePadre" EntitySet="EstudiantePadreSet" />
+    </AssociationSet>
+    <AssociationSet Name="PadreEstudiantePadre" Association="modelo_plantel.Store.PadreEstudiantePadre">
+      <End Role="Padre" EntitySet="Padres" />
+      <End Role="EstudiantePadre" EntitySet="EstudiantePadreSet" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Usuarios">
@@ -162,7 +167,6 @@
     <Property Name="telefono" Type="nvarchar(max)" Nullable="false" />
     <Property Name="direccion" Type="nvarchar(max)" Nullable="false" />
     <Property Name="UsuarioId" Type="int" Nullable="false" />
-    <Property Name="EstudianteId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Asistencias">
     <Key>
@@ -203,6 +207,14 @@
     <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="version" Type="int" Nullable="true" />
     <Property Name="definition" Type="varbinary(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="EstudiantePadreSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EstudianteId" Type="int" Nullable="false" />
+    <Property Name="PadreId" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="UsuarioEstudiante">
     <End Role="Usuario" Type="modelo_plantel.Store.Usuarios" Multiplicity="1" />
@@ -272,18 +284,6 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Notificacion">
-        <PropertyRef Name="EstudianteId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="EstudiantePadre">
-    <End Role="Estudiante" Type="modelo_plantel.Store.Estudiantes" Multiplicity="1" />
-    <End Role="Padre" Type="modelo_plantel.Store.Padres" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Estudiante">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Padre">
         <PropertyRef Name="EstudianteId" />
       </Dependent>
     </ReferentialConstraint>
@@ -360,6 +360,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="EstudianteEstudiantePadre">
+    <End Role="Estudiante" Type="modelo_plantel.Store.Estudiantes" Multiplicity="1" />
+    <End Role="EstudiantePadre" Type="modelo_plantel.Store.EstudiantePadreSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Estudiante">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EstudiantePadre">
+        <PropertyRef Name="EstudianteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PadreEstudiantePadre">
+    <End Role="Padre" Type="modelo_plantel.Store.Padres" Multiplicity="1" />
+    <End Role="EstudiantePadre" Type="modelo_plantel.Store.EstudiantePadreSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Padre">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EstudiantePadre">
+        <PropertyRef Name="PadreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -399,10 +423,6 @@
           <AssociationSet Name="EstudianteNotificacion" Association="modelo_plantel.EstudianteNotificacion">
             <End Role="Estudiante" EntitySet="Estudiantes" />
             <End Role="Notificacion" EntitySet="Notificaciones" />
-          </AssociationSet>
-          <AssociationSet Name="EstudiantePadre" Association="modelo_plantel.EstudiantePadre">
-            <End Role="Estudiante" EntitySet="Estudiantes" />
-            <End Role="Padre" EntitySet="Padres" />
           </AssociationSet>
           <EntitySet Name="ProfesorAsignaturaSet" EntityType="modelo_plantel.ProfesorAsignatura" />
           <AssociationSet Name="ProfesorProfesorAsignatura" Association="modelo_plantel.ProfesorProfesorAsignatura">
@@ -459,6 +479,15 @@
           <AssociationSet Name="MatriculaAsistencia" Association="modelo_plantel.MatriculaAsistencia">
             <End Role="Matricula" EntitySet="Matriculas" />
             <End Role="Asistencia" EntitySet="Asistencias" />
+          </AssociationSet>
+          <EntitySet Name="EstudiantePadreSet" EntityType="modelo_plantel.EstudiantePadre" />
+          <AssociationSet Name="EstudianteEstudiantePadre" Association="modelo_plantel.EstudianteEstudiantePadre">
+            <End Role="Estudiante" EntitySet="Estudiantes" />
+            <End Role="EstudiantePadre" EntitySet="EstudiantePadreSet" />
+          </AssociationSet>
+          <AssociationSet Name="PadreEstudiantePadre" Association="modelo_plantel.PadreEstudiantePadre">
+            <End Role="Padre" EntitySet="Padres" />
+            <End Role="EstudiantePadre" EntitySet="EstudiantePadreSet" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Usuario">
@@ -556,7 +585,7 @@
           <NavigationProperty Name="Usuario" Relationship="modelo_plantel.UsuarioEstudiante" FromRole="Estudiante" ToRole="Usuario" />
           <Property Name="UsuarioId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Notificacion" Relationship="modelo_plantel.EstudianteNotificacion" FromRole="Estudiante" ToRole="Notificacion" />
-          <NavigationProperty Name="Padre" Relationship="modelo_plantel.EstudiantePadre" FromRole="Estudiante" ToRole="Padre" />
+          <NavigationProperty Name="EstudiantePadre" Relationship="modelo_plantel.EstudianteEstudiantePadre" FromRole="Estudiante" ToRole="EstudiantePadre" />
         </EntityType>
         <EntityType Name="Padre">
           <Key>
@@ -571,8 +600,7 @@
           <Property Name="direccion" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Usuario" Relationship="modelo_plantel.UsuarioPadre" FromRole="Padre" ToRole="Usuario" />
           <Property Name="UsuarioId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Estudiante" Relationship="modelo_plantel.EstudiantePadre" FromRole="Padre" ToRole="Estudiante" />
-          <Property Name="EstudianteId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EstudiantePadre" Relationship="modelo_plantel.PadreEstudiantePadre" FromRole="Padre" ToRole="EstudiantePadre" />
         </EntityType>
         <EntityType Name="Asistencia">
           <Key>
@@ -666,18 +694,6 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Notificacion">
-              <PropertyRef Name="EstudianteId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="EstudiantePadre">
-          <End Type="modelo_plantel.Estudiante" Role="Estudiante" Multiplicity="1" />
-          <End Type="modelo_plantel.Padre" Role="Padre" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Estudiante">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Padre">
               <PropertyRef Name="EstudianteId" />
             </Dependent>
           </ReferentialConstraint>
@@ -786,6 +802,40 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="EstudiantePadre">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Estudiante" Relationship="modelo_plantel.EstudianteEstudiantePadre" FromRole="EstudiantePadre" ToRole="Estudiante" />
+          <Property Name="EstudianteId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Padre" Relationship="modelo_plantel.PadreEstudiantePadre" FromRole="EstudiantePadre" ToRole="Padre" />
+          <Property Name="PadreId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="EstudianteEstudiantePadre">
+          <End Type="modelo_plantel.Estudiante" Role="Estudiante" Multiplicity="1" />
+          <End Type="modelo_plantel.EstudiantePadre" Role="EstudiantePadre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estudiante">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EstudiantePadre">
+              <PropertyRef Name="EstudianteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PadreEstudiantePadre">
+          <End Type="modelo_plantel.Padre" Role="Padre" Multiplicity="1" />
+          <End Type="modelo_plantel.EstudiantePadre" Role="EstudiantePadre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Padre">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EstudiantePadre">
+              <PropertyRef Name="PadreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -889,7 +939,6 @@
           <ScalarProperty Name="telefono" ColumnName="telefono" />
           <ScalarProperty Name="direccion" ColumnName="direccion" />
           <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
-          <ScalarProperty Name="EstudianteId" ColumnName="EstudianteId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -934,6 +983,15 @@
           <ScalarProperty Name="principal_id" ColumnName="principal_id" />
           <ScalarProperty Name="version" ColumnName="version" />
           <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EstudiantePadreSet">
+      <EntityTypeMapping TypeName="IsTypeOf(modelo_plantel.EstudiantePadre)">
+        <MappingFragment StoreEntitySet="EstudiantePadreSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="EstudianteId" ColumnName="EstudianteId" />
+          <ScalarProperty Name="PadreId" ColumnName="PadreId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

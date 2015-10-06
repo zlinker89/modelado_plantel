@@ -17,7 +17,7 @@ namespace Modelado
         public Estudiante()
         {
             this.Notificacion = new HashSet<Notificacion>();
-            this.Padre = new HashSet<Padre>();
+            this.EstudiantePadre = new HashSet<EstudiantePadre>();
         }
     
         public int Id { get; set; }
@@ -32,6 +32,6 @@ namespace Modelado
     
         public virtual Usuario Usuario { get; set; }
         public virtual ICollection<Notificacion> Notificacion { get; set; }
-        public virtual ICollection<Padre> Padre { get; set; }
+        public virtual ICollection<EstudiantePadre> EstudiantePadre { get; set; }
     }
 }
