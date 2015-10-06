@@ -623,7 +623,7 @@
                             ajaxHelper(usuariosUri + estudiantes[e].UsuarioId, 'DELETE');
                             $('#progreso').hide();
                         });
-                        Materialize.toast("Se ha eliminado a " + estudiantess[e].nombres + ".", 5000);
+                        Materialize.toast("Se ha eliminado a " + estudiantes[e].nombres + ".", 5000);
                         self.estudiantes.remove(estudiantes[e]);
                         self.detail_modificar(null);
                     }
