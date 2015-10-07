@@ -1,9 +1,9 @@
 ﻿var ViewModel = function () {
     var self = this;
-    self.cursos = ko.observableArray();
+    self.jornadas = ko.observableArray();
     self.error = ko.observable();
 
-    var cursosUri = '/api/Cursoes/';
+    var jornadasUri = '/api/Jornadas/';
 
     function ajaxHelper(uri, method, data) {
         self.error(''); // Clear error message
@@ -24,28 +24,28 @@
     }
     /*----------------------------------------- Functions para los roles ------------------1---*/
 
-    function getAllCursos() {
-        ajaxHelper(cursosUri, 'GET').done(function (data) {
+    function getAllJornadas() {
+        ajaxHelper(jornadasUri, 'GET').done(function (data) {
             $('#progreso').hide();
-            self.cursos(data);
+            self.jornadas(data);
         });
     }
 
     /* -----------------------------------------FIN Functions para los roles*/
 
     // xxxxxxxxxxxxxxxxxxxxxxxxxxx-------------------------------------funciones para asignaturas
-    self.addCurso = function () {
+    self.addJornada = function () {
         var nombres = $('#nombres').val();
         try {
             String.prototype.capitalize = function () {
                 return this.toLowerCase().replace(/(^|\s)([a-z])/g, function (m, p1, p2) { return p1 + p2.toUpperCase(); });
             };
-            var curso = {
-                nombre_curso: nombres.capitalize()
+            var jornada = {
+                nombre_jornada: nombres.capitalize()
             }
             // aqui guardo el admin en la base de datos
-            ajaxHelper(cursosUri, 'POST', curso).done(function (data) {
-                self.cursos.push(data);
+            ajaxHelper(jornadasUri, 'POST', jornada).done(function (data) {
+                self.jornadas.push(data);
             });
 
             // lipiamos el formulario
@@ -61,17 +61,17 @@
 
     }
 
-    self.deleteCurso = function (curso) {
-        if (confirm('¿Desea eliminar esta curso?')) {
-            ajaxHelper(cursosUri + curso.Id, 'DELETE').done(function () {
-                Materialize.toast("Se ha eliminado a " + curso.nombre_curso + ".", 5000);
-                self.cursos.remove(curso);
+    self.deleteJornada = function (jornada) {
+        if (confirm('¿Desea eliminar esta jornada?')) {
+            ajaxHelper(jornadasUri + jornada.Id, 'DELETE').done(function () {
+                Materialize.toast("Se ha eliminado a " + jornada.nombre_jornada + ".", 5000);
+                self.jornadas.remove(jornada);
             });
         }
     }
 
     // cargamos para mostrar
-    getAllCursos();
+    getAllJornadas();
 };
 
 ko.applyBindings(new ViewModel());
