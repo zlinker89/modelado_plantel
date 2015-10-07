@@ -55,11 +55,11 @@
                             <div class="col s12">
                                 <form class="s12" data-bind="submit: addEstudiante">
                                     <div class="row col s12">
-                                        <div class="input-field col s6">
+                                        <div class="input-field col s12 m6">
                                             <input id="nombres" type="text" class="validate" required>
                                             <label for="nombres">Nombres:</label>
                                         </div>
-                                        <div class="input-field col s6">
+                                        <div class="input-field col s12 m6">
                                             <input id="apellidos" type="text" class="validate" required>
                                             <label for="apellidos">Apellidos:</label>
                                         </div>
@@ -67,7 +67,7 @@
                                     <div class="row col s12 l3">
                                         <div class="input-field col s12" style="z-index:2;">
                                             <select id="tdocumento">
-                                                <option value="TI">TI</option>
+                                                <option value="TI" selected>TI</option>
                                                 <option value="CC">CC</option>
                                                 <option value="CE">CE</option>
                                             </select>
@@ -125,12 +125,20 @@
                             <form class="s12 form-inline" data-bind="submit: consultaEstudiante">
                                 <div class="row col s12">
                                     <div class="input-field col row s12">
-                                        <input id="numero" type="text" class="validate" required>
-                                        <label for="numero">Documento:</label>
-                                        <button type="submit" class="btn btn-primary waves-light waves-effect">Consultar</button>
-                                        <!--ko if:detail_modificar()-->
-                                        <button type="button" class="btn btn-danger waves-light waves-effect" data-bind="click: borrarEstudiante">Eliminar</button>
-                                        <!--/ko-->
+                                        <div class="col row s12 m4 l12">
+                                            <input id="numero" type="text" class="validate" required>
+                                            <label for="numero">Documento:</label>
+                                        </div>
+                                        <div class="col row s12 m4">
+                                            <button type="submit" class="btn btn-primary waves-light waves-effect">Consultar</button>
+                                        </div>
+                                        <div class="col row s12 m4">
+                                            <!--ko if:detail_modificar()-->
+                                            <button type="button" class="btn btn-danger waves-light waves-effect" data-bind="click: borrarEstudiante">Eliminar</button>
+                                            <!--/ko-->
+                                        </div>
+                                        
+                                        
                                     </div>
                                     <div id="progreso" class="s12 center">
                                         <div class="preloader-wrapper big active">
@@ -152,41 +160,41 @@
                         <div class="col s12">
                             <form class="s12" data-bind="submit: updateEstudiante">
                                 <div class="row col s12">
-                                    <div class="input-field col s6">
+                                    <div class="input-field col s12 m6">
                                         <input id="nnombres" type="text" class="validate" data-bind="value:detail_modificar().nombres" required>
-                                        <label for="nnombres">Nombres:</label>
+                                        <label for="nnombres" class="active">Nombres:</label>
                                     </div>
-                                    <div class="input-field col s6">
+                                    <div class="input-field col s12 m6">
                                         <input id="napellidos" type="text" class="validate" data-bind="value:detail_modificar().apellidos" required>
-                                        <label for="napellidos">Apellidos:</label>
+                                        <label for="napellidos" class="active">Apellidos:</label>
                                     </div>
                                 </div>
                                 <div class="row col s12 l9">
                                     <div class="input-field col s5">
                                         <input id="ntdocumento" type="text" class="validate" data-bind="value:detail_modificar().tdocumento" readonly>
-                                        <label for="ntdocumento">Tipo de Documento:</label>
+                                        <label for="ntdocumento" class="active">Tipo de Documento:</label>
                                     </div>
                                     <div class="input-field col s7">
                                         <input id="ndocumento" type="text" class="validate" data-bind="value:detail_modificar().ndocumento" readonly>
-                                        <label for="ndocumento">Documento:</label>
+                                        <label for="ndocumento" class="active">Documento:</label>
                                     </div>
                                 </div>
                                 <div class="row col s12">
                                     <div class="input-field col s12">
                                         <input id="nfecha_nacimiento" type="text" onclick="fecha();" data-bind="value:detail_modificar().fecha_nacimiento" class="validate datepicker" required>
-                                        <label for="nfecha_nacimiento">Fecha de nacimiento:</label>
+                                        <label for="nfecha_nacimiento" class="active">Fecha de nacimiento:</label>
                                     </div>
                                 </div>
                                 <div class="row col s12">
                                     <div class="input-field col s12">
                                         <input id="ndireccion" type="text" class="validate" data-bind="value:detail_modificar().direccion" required>
-                                        <label for="ndireccion">Direccion:</label>
+                                        <label for="ndireccion" class="active">Direccion:</label>
                                     </div>
                                 </div>
                                 <div class="row col s12">
                                     <div class="input-field col s12">
                                         <input id="ntelefono" type="text" class="validate" data-bind="value:detail_modificar().telefono" required>
-                                        <label for="ntelefono">Telefono:</label>
+                                        <label for="ntelefono" class="active">Telefono:</label>
                                     </div>
                                 </div>
                                 <div class="row col s12">
@@ -244,7 +252,7 @@
     <script src="../Scripts/knockout-3.3.0.js"></script>
     <script src="../Scripts/materialize/materialize.min.js"></script>
     <!--Mis Scripts-->
-    <script src="../Scripts/index.js"></script>
+    <script src="../Scripts/indexEstudiante.js"></script>
     <script src="../Scripts/verificar_usuario.js"></script>
 </body>
 </html>

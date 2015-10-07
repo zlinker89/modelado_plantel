@@ -55,11 +55,11 @@
                             <div class="col s12">
                                 <form class="s12" data-bind="submit: addPadre">
                                     <div class="row col s12">
-                                        <div class="input-field col s6">
+                                        <div class="input-field col s12 m6">
                                             <input id="nombres" type="text" class="validate" required>
                                             <label for="nombres">Nombres:</label>
                                         </div>
-                                        <div class="input-field col s6">
+                                        <div class="input-field col s12 m6">
                                             <input id="apellidos" type="text" class="validate" required>
                                             <label for="apellidos">Apellidos:</label>
                                         </div>
@@ -67,7 +67,7 @@
                                     <div class="row col s12 l3">
                                         <div class="input-field col s12" style="z-index:2;">
                                             <select id="tdocumento">
-                                                <option value="CC">CC</option>
+                                                <option value="CC" selected>CC</option>
                                                 <option value="TI">TI</option>
                                                 <option value="CE">CE</option>
                                             </select>
@@ -119,15 +119,15 @@
                             <form class="s12 form-inline" data-bind="submit: consultaPadre">
                                 <div class="row col s12">
                                     <div class="input-field col row s12">
-                                        <div class="col row s12 l6">
+                                        <div class="col row s12 m4 l12">
                                             <input id="nnumero" type="text" class="validate" required>
                                             <label for="nnumero">Documento:</label>
                                         </div>
-                                        <div class="col row s12 m6 l3">
+                                        <div class="col row s12 m4">
                                             <button type="submit" class="btn btn-primary waves-light waves-effect">Consultar</button>
                                         </div>
                                         <!--ko if:detail_modificar()-->
-                                        <div class="col row s12 m6 l3">
+                                        <div class="col row s12 m4">
                                             <button type="button" class="btn btn-danger waves-light waves-effect" data-bind="click: borrarPadre">Eliminar</button>
                                         </div>
                                         <!--/ko-->
@@ -290,7 +290,7 @@
     <script src="../Scripts/knockout-3.3.0.js"></script>
     <script src="../Scripts/materialize/materialize.min.js"></script>
     <!--Mis Scripts-->
-    <script src="../Scripts/index.js"></script>
+    <script src="../Scripts/indexPadres.js"></script>
     <script src="../Scripts/verificar_usuario.js"></script>
 </body>
 </html>

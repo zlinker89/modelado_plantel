@@ -290,6 +290,10 @@
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\eventos.js" />
     <Content Include="Scripts\index.js" />
+    <Content Include="Scripts\indexAdmin.js" />
+    <Content Include="Scripts\indexEstudiante.js" />
+    <Content Include="Scripts\indexPadres.js" />
+    <Content Include="Scripts\indexProfesor.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
     <Content Include="Scripts\jquery-2.1.4.min.map" />
