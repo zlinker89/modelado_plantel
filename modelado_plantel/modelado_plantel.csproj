@@ -308,6 +308,7 @@
     <Content Include="Scripts\verificar_usuario.js" />
     <Content Include="Sitio WEB\admin.html" />
     <Content Include="Sitio WEB\ControlAdmin.html" />
+    <Content Include="Sitio WEB\ControlAsignatura.html" />
     <Content Include="Sitio WEB\ControlEstudiante.html" />
     <Content Include="Sitio WEB\ControlPadres.html" />
     <Content Include="Sitio WEB\ControlProfesor.html" />
