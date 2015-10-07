@@ -119,11 +119,17 @@
                             <form class="s12 form-inline" data-bind="submit: consultaPadre">
                                 <div class="row col s12">
                                     <div class="input-field col row s12">
-                                        <input id="nnumero" type="text" class="validate" required>
-                                        <label for="nnumero">Documento:</label>
-                                        <button type="submit" class="btn btn-primary waves-light waves-effect">Consultar</button>
+                                        <div class="col row s12 l6">
+                                            <input id="nnumero" type="text" class="validate" required>
+                                            <label for="nnumero">Documento:</label>
+                                        </div>
+                                        <div class="col row s12 m6 l3">
+                                            <button type="submit" class="btn btn-primary waves-light waves-effect">Consultar</button>
+                                        </div>
                                         <!--ko if:detail_modificar()-->
-                                        <button type="button" class="btn btn-danger waves-light waves-effect" data-bind="click: borrarPadre">Eliminar</button>
+                                        <div class="col row s12 m6 l3">
+                                            <button type="button" class="btn btn-danger waves-light waves-effect" data-bind="click: borrarPadre">Eliminar</button>
+                                        </div>
                                         <!--/ko-->
                                     </div>
                                     <div id="progreso" class="s12 center">
@@ -148,38 +154,38 @@
                                 <div class="row col s12">
                                     <div class="input-field col s6">
                                         <input id="nnombres" type="text" class="validate" data-bind="value:detail_modificar().nombres" required>
-                                        <label for="nnombres">Nombres:</label>
+                                        <label for="nnombres" class="active">Nombres:</label>
                                     </div>
                                     <div class="input-field col s6">
                                         <input id="napellidos" type="text" class="validate" data-bind="value:detail_modificar().apellidos" required>
-                                        <label for="napellidos">Apellidos:</label>
+                                        <label for="napellidos" class="active">Apellidos:</label>
                                     </div>
                                 </div>
                                 <div class="row col s12 l9">
                                     <div class="input-field col s5">
                                         <input id="ntdocumento" type="text" class="validate" data-bind="value:detail_modificar().tdocumento" readonly>
-                                        <label for="ntdocumento">Tipo de Documento:</label>
+                                        <label for="ntdocumento" class="active">Tipo de Documento:</label>
                                     </div>
                                     <div class="input-field col s7">
                                         <input id="ndocumento" type="text" class="validate" data-bind="value:detail_modificar().ndocumento" readonly>
-                                        <label for="ndocumento">Documento:</label>
+                                        <label for="ndocumento" class="active">Documento:</label>
                                     </div>
                                 </div>
                                 <div class="row col s12">
                                     <div class="input-field col s12">
                                         <input id="ndireccion" type="text" class="validate" data-bind="value:detail_modificar().direccion" required>
-                                        <label for="ndireccion">Direccion:</label>
+                                        <label for="ndireccion" class="active">Direccion:</label>
                                     </div>
                                 </div>
                                 <div class="row col s12">
                                     <div class="input-field col s12">
                                         <input id="ntelefono" type="text" class="validate" data-bind="value:detail_modificar().telefono" required>
-                                        <label for="ntelefono">Telefono:</label>
+                                        <label for="ntelefono" class="active">Telefono:</label>
                                     </div>
                                 </div>
                                 <div class="row col s12">
                                     <div class="input-field col s12">
-                                        <input id="id" type="text" class="validate" data-bind="value:detail_modificar().Id" required>
+                                        <input id="id" type="hidden" class="validate" data-bind="value:detail_modificar().Id" required>
                                         <input id="uid" type="hidden" class="validate" data-bind="value:detail_modificar().UsuarioId" required>
                                     </div>
                                 </div>
@@ -219,11 +225,11 @@
                                     <div class="row col s12">
                                         <div class="input-field col s6">
                                             <input id="nnnombres" type="text" class="validate" data-bind="value:detail_enlazar().nombres" required>
-                                            <label for="nnnombres">Nombres:</label>
+                                            <label for="nnnombres" class="active">Nombres:</label>
                                         </div>
                                         <div class="input-field col s6">
                                             <input id="nnapellidos" type="text" class="validate" data-bind="value:detail_enlazar().apellidos" required>
-                                            <label for="nnapellidos">Apellidos:</label>
+                                            <label for="nnapellidos" class="active">Apellidos:</label>
                                         </div>
                                     </div>
          

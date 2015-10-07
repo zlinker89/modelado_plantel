@@ -897,6 +897,8 @@
         }
     }
     self.consultaPadre = function () {
+        getAllPadreEstudiante();
+        self.PadresEstudiantes(null);
         ajaxHelper(padresUri, 'GET').done(function (padres) {
             var documento = $('#nnumero').val();
             var encontrado = false;
@@ -945,6 +947,7 @@
                 });
             }
             self.detail_enlazar(null);
+            self.detail_modificar(null);
             $('#progreso').hide();
         });
     }
