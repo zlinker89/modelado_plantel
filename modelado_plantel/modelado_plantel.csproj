@@ -291,6 +291,8 @@
     <Content Include="Scripts\eventos.js" />
     <Content Include="Scripts\index.js" />
     <Content Include="Scripts\indexAdmin.js" />
+    <Content Include="Scripts\indexAsignaturas.js" />
+    <Content Include="Scripts\indexCursos.js" />
     <Content Include="Scripts\indexEstudiante.js" />
     <Content Include="Scripts\indexPadres.js" />
     <Content Include="Scripts\indexProfesor.js" />
@@ -313,6 +315,7 @@
     <Content Include="Sitio WEB\admin.html" />
     <Content Include="Sitio WEB\ControlAdmin.html" />
     <Content Include="Sitio WEB\ControlAsignatura.html" />
+    <Content Include="Sitio WEB\ControlCursos.html" />
     <Content Include="Sitio WEB\ControlEstudiante.html" />
     <Content Include="Sitio WEB\ControlPadres.html" />
     <Content Include="Sitio WEB\ControlProfesor.html" />

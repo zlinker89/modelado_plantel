@@ -45,11 +45,11 @@
         <div class="row">
             <ul class="collapsible" data-collapsible="accordion">
                 <li>
-                    <div class="collapsible-header active"><i class="material-icons">add</i>Crear Asignatura</div>
+                    <div class="collapsible-header active"><i class="material-icons">add</i>Crear Curso</div>
                     <div class="collapsible-body">
                         <div class="row">
                             <div class="col s12">
-                                <form class="s12" data-bind="submit: addAsignatura">
+                                <form class="s12" data-bind="submit: addCurso">
                                     <div class="input-field">
                                         <div class="row col s12 m6 l8">
                                             <input id="nombres" type="text" class="validate" required>
@@ -63,11 +63,11 @@
                                 </form>
                             </div>
                             <div class="row col s12">
-                                <ul class="collection with-header" id="listado" data-bind="foreach: asignaturas">
+                                <ul class="collection with-header" id="listado" data-bind="foreach: cursos">
                                     <li class="collection-item">
                                         <div>
-                                            <span data-bind="text: nombre_asignatura"></span>
-                                            <a href="#modal1" class="secondary-content" data-bind="click: $parent.deleteAsignatura"><i class="material-icons">delete</i></a>
+                                            <span data-bind="text: nombre_curso"></span>
+                                            <a href="#!" class="secondary-content" data-bind="click: $parent.deleteCurso"><i class="material-icons">delete</i></a>
                                         </div>
                                     </li>
                                 </ul>
@@ -84,7 +84,7 @@
     <script src="../Scripts/knockout-3.3.0.js"></script>
     <script src="../Scripts/materialize/materialize.min.js"></script>
     <!--Mis Scripts-->
-    <script src="../Scripts/indexAsignaturas.js"></script>
+    <script src="../Scripts/indexCursos.js"></script>
     <script src="../Scripts/verificar_usuario.js"></script>
 </body>
 </html>
