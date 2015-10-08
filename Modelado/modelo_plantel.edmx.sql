@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/05/2015 19:40:23
+-- Date Created: 10/08/2015 16:42:17
 -- Generated from EDMX file: D:\PROYECTOS VISUAL STUDIO 2013\modelado_plantel\Modelado\modelo_plantel.edmx
 -- --------------------------------------------------
 
@@ -250,6 +250,22 @@ CREATE TABLE [dbo].[EstudiantePadreSet] (
 );
 GO
 
+-- Creating table 'Horarios'
+CREATE TABLE [dbo].[Horarios] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [hora_incio] nvarchar(max)  NOT NULL,
+    [hora_fin] nvarchar(max)  NOT NULL
+);
+GO
+
+-- Creating table 'HorarioMatricula'
+CREATE TABLE [dbo].[HorarioMatricula] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [MatriculaId] int  NOT NULL,
+    [HorarioId] int  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -335,6 +351,18 @@ GO
 -- Creating primary key on [Id] in table 'EstudiantePadreSet'
 ALTER TABLE [dbo].[EstudiantePadreSet]
 ADD CONSTRAINT [PK_EstudiantePadreSet]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Horarios'
+ALTER TABLE [dbo].[Horarios]
+ADD CONSTRAINT [PK_Horarios]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'HorarioMatricula'
+ALTER TABLE [dbo].[HorarioMatricula]
+ADD CONSTRAINT [PK_HorarioMatricula]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -536,6 +564,34 @@ ADD CONSTRAINT [FK_PadreEstudiantePadre]
 CREATE INDEX [IX_FK_PadreEstudiantePadre]
 ON [dbo].[EstudiantePadreSet]
     ([PadreId]);
+GO
+
+-- Creating foreign key on [MatriculaId] in table 'HorarioMatricula'
+ALTER TABLE [dbo].[HorarioMatricula]
+ADD CONSTRAINT [FK_MatriculaHorarioMatricula]
+    FOREIGN KEY ([MatriculaId])
+    REFERENCES [dbo].[Matriculas]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_MatriculaHorarioMatricula'
+CREATE INDEX [IX_FK_MatriculaHorarioMatricula]
+ON [dbo].[HorarioMatricula]
+    ([MatriculaId]);
+GO
+
+-- Creating foreign key on [HorarioId] in table 'HorarioMatricula'
+ALTER TABLE [dbo].[HorarioMatricula]
+ADD CONSTRAINT [FK_HorarioHorarioMatricula]
+    FOREIGN KEY ([HorarioId])
+    REFERENCES [dbo].[Horarios]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_HorarioHorarioMatricula'
+CREATE INDEX [IX_FK_HorarioHorarioMatricula]
+ON [dbo].[HorarioMatricula]
+    ([HorarioId]);
 GO
 
 -- --------------------------------------------------

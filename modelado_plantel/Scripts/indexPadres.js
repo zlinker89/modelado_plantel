@@ -109,13 +109,16 @@
                 }
                 // aqui guardo el usuario en la base de datos
                 ajaxHelper(usuariosUri, 'POST', usuario).done(function (item) {
+                    String.prototype.capitalize = function () {
+                        return this.toLowerCase().replace(/(^|\s)([a-z])/g, function (m, p1, p2) { return p1 + p2.toUpperCase(); });
+                    };
                     var padre = {
-                        nombres: nombres,
-                        apellidos: apellidos,
+                        nombres: nombres.capitalize(),
+                        apellidos: apellidos.capitalize(),
                         tdocumento: tdocumento,
                         ndocumento: documento,
                         telefono: telefono,
-                        direccion: direccion,
+                        direccion: direccion.capitalize(),
                         UsuarioId: item.Id
                     }
                     // aqui guardo el admin en la base de datos
@@ -204,16 +207,18 @@
         var UsuarioId = $('#uid').val();
 
         try {
-
+            String.prototype.capitalize = function () {
+                return this.toLowerCase().replace(/(^|\s)([a-z])/g, function (m, p1, p2) { return p1 + p2.toUpperCase(); });
+            };
 
             var padre = {
                 Id: Id,
-                nombres: nombres,
-                apellidos: apellidos,
+                nombres: nombres.capitalize(),
+                apellidos: apellidos.capitalize(),
                 tdocumento: tdocumento,
                 ndocumento: documento,
                 telefono: telefono,
-                direccion: direccion,
+                direccion: direccion.capitalize(),
                 UsuarioId: UsuarioId
             }
 

@@ -20,6 +20,8 @@
     <EntitySet Name="ProfesorAsignaturaSet" EntityType="modelo_plantel.Store.ProfesorAsignaturaSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="sysdiagrams" EntityType="modelo_plantel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="EstudiantePadreSet" EntityType="modelo_plantel.Store.EstudiantePadreSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Horarios" EntityType="modelo_plantel.Store.Horarios" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="HorarioMatricula" EntityType="modelo_plantel.Store.HorarioMatricula" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="UsuarioEstudiante" Association="modelo_plantel.Store.UsuarioEstudiante">
       <End Role="Usuario" EntitySet="Usuarios" />
       <End Role="Estudiante" EntitySet="Estudiantes" />
@@ -75,6 +77,14 @@
     <AssociationSet Name="PadreEstudiantePadre" Association="modelo_plantel.Store.PadreEstudiantePadre">
       <End Role="Padre" EntitySet="Padres" />
       <End Role="EstudiantePadre" EntitySet="EstudiantePadreSet" />
+    </AssociationSet>
+    <AssociationSet Name="MatriculaHorarioMatricula" Association="modelo_plantel.Store.MatriculaHorarioMatricula">
+      <End Role="Matricula" EntitySet="Matriculas" />
+      <End Role="HorarioMatricula" EntitySet="HorarioMatricula" />
+    </AssociationSet>
+    <AssociationSet Name="HorarioHorarioMatricula" Association="modelo_plantel.Store.HorarioHorarioMatricula">
+      <End Role="Horario" EntitySet="Horarios" />
+      <End Role="HorarioMatricula" EntitySet="HorarioMatricula" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Usuarios">
@@ -215,6 +225,22 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="EstudianteId" Type="int" Nullable="false" />
     <Property Name="PadreId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Horarios">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="hora_incio" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="hora_fin" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HorarioMatricula">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MatriculaId" Type="int" Nullable="false" />
+    <Property Name="HorarioId" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="UsuarioEstudiante">
     <End Role="Usuario" Type="modelo_plantel.Store.Usuarios" Multiplicity="1" />
@@ -384,6 +410,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="MatriculaHorarioMatricula">
+    <End Role="Matricula" Type="modelo_plantel.Store.Matriculas" Multiplicity="1" />
+    <End Role="HorarioMatricula" Type="modelo_plantel.Store.HorarioMatricula" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Matricula">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="HorarioMatricula">
+        <PropertyRef Name="MatriculaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="HorarioHorarioMatricula">
+    <End Role="Horario" Type="modelo_plantel.Store.Horarios" Multiplicity="1" />
+    <End Role="HorarioMatricula" Type="modelo_plantel.Store.HorarioMatricula" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Horario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="HorarioMatricula">
+        <PropertyRef Name="HorarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -489,6 +539,16 @@
             <End Role="Padre" EntitySet="Padres" />
             <End Role="EstudiantePadre" EntitySet="EstudiantePadreSet" />
           </AssociationSet>
+          <EntitySet Name="Horarios" EntityType="modelo_plantel.Horario" />
+          <EntitySet Name="HorarioMatricula" EntityType="modelo_plantel.HorarioMatricula" />
+          <AssociationSet Name="MatriculaHorarioMatricula" Association="modelo_plantel.MatriculaHorarioMatricula">
+            <End Role="Matricula" EntitySet="Matriculas" />
+            <End Role="HorarioMatricula" EntitySet="HorarioMatricula" />
+          </AssociationSet>
+          <AssociationSet Name="HorarioHorarioMatricula" Association="modelo_plantel.HorarioHorarioMatricula">
+            <End Role="Horario" EntitySet="Horarios" />
+            <End Role="HorarioMatricula" EntitySet="HorarioMatricula" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Usuario">
           <Key>
@@ -554,6 +614,7 @@
           <NavigationProperty Name="ProfesorAsignatura" Relationship="modelo_plantel.ProfesorAsignaturaMatricula" FromRole="Matricula" ToRole="ProfesorAsignatura" />
           <Property Name="ProfesorAsignaturaId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Asistencia" Relationship="modelo_plantel.MatriculaAsistencia" FromRole="Matricula" ToRole="Asistencia" />
+          <NavigationProperty Name="HorarioMatricula" Relationship="modelo_plantel.MatriculaHorarioMatricula" FromRole="Matricula" ToRole="HorarioMatricula" />
         </EntityType>
         <EntityType Name="Profesor">
           <Key>
@@ -836,6 +897,49 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Horario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="hora_incio" Type="String" Nullable="false" />
+          <Property Name="hora_fin" Type="String" Nullable="false" />
+          <NavigationProperty Name="HorarioMatricula" Relationship="modelo_plantel.HorarioHorarioMatricula" FromRole="Horario" ToRole="HorarioMatricula" />
+        </EntityType>
+        <EntityType Name="HorarioMatricula">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Matricula" Relationship="modelo_plantel.MatriculaHorarioMatricula" FromRole="HorarioMatricula" ToRole="Matricula" />
+          <Property Name="MatriculaId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Horario" Relationship="modelo_plantel.HorarioHorarioMatricula" FromRole="HorarioMatricula" ToRole="Horario" />
+          <Property Name="HorarioId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="MatriculaHorarioMatricula">
+          <End Type="modelo_plantel.Matricula" Role="Matricula" Multiplicity="1" />
+          <End Type="modelo_plantel.HorarioMatricula" Role="HorarioMatricula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Matricula">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HorarioMatricula">
+              <PropertyRef Name="MatriculaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="HorarioHorarioMatricula">
+          <End Type="modelo_plantel.Horario" Role="Horario" Multiplicity="1" />
+          <End Type="modelo_plantel.HorarioMatricula" Role="HorarioMatricula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Horario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HorarioMatricula">
+              <PropertyRef Name="HorarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -992,6 +1096,24 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="EstudianteId" ColumnName="EstudianteId" />
           <ScalarProperty Name="PadreId" ColumnName="PadreId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Horarios">
+      <EntityTypeMapping TypeName="IsTypeOf(modelo_plantel.Horario)">
+        <MappingFragment StoreEntitySet="Horarios">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="hora_incio" ColumnName="hora_incio" />
+          <ScalarProperty Name="hora_fin" ColumnName="hora_fin" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HorarioMatricula">
+      <EntityTypeMapping TypeName="IsTypeOf(modelo_plantel.HorarioMatricula)">
+        <MappingFragment StoreEntitySet="HorarioMatricula">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="MatriculaId" ColumnName="MatriculaId" />
+          <ScalarProperty Name="HorarioId" ColumnName="HorarioId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

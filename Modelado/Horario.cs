@@ -12,24 +12,17 @@ namespace Modelado
     using System;
     using System.Collections.Generic;
     
-    public partial class Matricula
+    public partial class Horario
     {
-        public Matricula()
+        public Horario()
         {
-            this.Asistencia = new HashSet<Asistencia>();
             this.HorarioMatricula = new HashSet<HorarioMatricula>();
         }
     
         public int Id { get; set; }
-        public string fecha_matricula { get; set; }
-        public int JornadaId { get; set; }
-        public int CursoId { get; set; }
-        public int ProfesorAsignaturaId { get; set; }
+        public string hora_incio { get; set; }
+        public string hora_fin { get; set; }
     
-        public virtual Jornada Jornada { get; set; }
-        public virtual Curso Curso { get; set; }
-        public virtual ProfesorAsignatura ProfesorAsignatura { get; set; }
-        public virtual ICollection<Asistencia> Asistencia { get; set; }
         public virtual ICollection<HorarioMatricula> HorarioMatricula { get; set; }
     }
 }

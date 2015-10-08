@@ -66,6 +66,12 @@
     <Compile Include="EstudiantePadre.cs">
       <DependentUpon>modelo_plantel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Horario.cs">
+      <DependentUpon>modelo_plantel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HorarioMatricula.cs">
+      <DependentUpon>modelo_plantel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Jornada.cs">
       <DependentUpon>modelo_plantel.tt</DependentUpon>
     </Compile>

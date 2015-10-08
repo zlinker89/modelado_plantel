@@ -31,7 +31,7 @@ namespace modelado_plantel.Controllers
                                         nombresPadre = ep.Padre.nombres,
                                         apellidosPadre = ep.Padre.nombres,
                                         nombresEstudiante = ep.Estudiante.nombres,
-                                        apellidosEstudiante = ep.Estudiante.nombres
+                                        apellidosEstudiante = ep.Estudiante.apellidos
                                     };
             return estudiantespadres;
         }

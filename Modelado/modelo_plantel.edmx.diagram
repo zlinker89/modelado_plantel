@@ -6,7 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="b5a5e1897eca4fc39530ce5f9d048967" Name="Diagram1" >
         <EntityTypeShape EntityType="modelo_plantel.Usuario" Width="1.5" PointX="0.5" PointY="0.5" />
-        <EntityTypeShape EntityType="modelo_plantel.Notificacion" Width="1.5" PointX="0.5" PointY="6.625" />
+        <EntityTypeShape EntityType="modelo_plantel.Notificacion" Width="1.5" PointX="0.5" PointY="7.125" />
         <EntityTypeShape EntityType="modelo_plantel.Jornada" Width="1.5" PointX="9.625" PointY="0.5" />
         <EntityTypeShape EntityType="modelo_plantel.Curso" Width="1.5" PointX="7.625" PointY="0.75" />
         <EntityTypeShape EntityType="modelo_plantel.Asignatura" Width="1.5" PointX="9.125" PointY="5.375" />
@@ -15,7 +15,7 @@
         <EntityTypeShape EntityType="modelo_plantel.Estudiante" Width="1.5" PointX="2.5" PointY="3.25" />
         <EntityTypeShape EntityType="modelo_plantel.Padre" Width="1.5" PointX="4.75" PointY="3.25" />
         <EntityTypeShape EntityType="modelo_plantel.Asistencia" Width="1.5" PointX="9.75" PointY="2.875" />
-        <EntityTypeShape EntityType="modelo_plantel.Admin" Width="1.5" PointX="0.5" PointY="3.5" />
+        <EntityTypeShape EntityType="modelo_plantel.Admin" Width="1.5" PointX="0.5" PointY="3.875" />
         <AssociationConnector Association="modelo_plantel.UsuarioEstudiante" />
         <AssociationConnector Association="modelo_plantel.UsuarioProfesor" />
         <AssociationConnector Association="modelo_plantel.UsuarioPadre" />
@@ -33,6 +33,10 @@
         <EntityTypeShape EntityType="modelo_plantel.EstudiantePadre" Width="1.5" PointX="5.875" PointY="7" />
         <AssociationConnector Association="modelo_plantel.EstudianteEstudiantePadre" />
         <AssociationConnector Association="modelo_plantel.PadreEstudiantePadre" />
+        <EntityTypeShape EntityType="modelo_plantel.Horario" Width="1.5" PointX="16.375" PointY="0.5" />
+        <EntityTypeShape EntityType="modelo_plantel.HorarioMatricula" Width="1.5" PointX="16.375" PointY="3.25" />
+        <AssociationConnector Association="modelo_plantel.MatriculaHorarioMatricula" />
+        <AssociationConnector Association="modelo_plantel.HorarioHorarioMatricula" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
