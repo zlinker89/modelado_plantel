@@ -86,6 +86,10 @@
       <End Role="Horario" EntitySet="Horarios" />
       <End Role="HorarioMatricula" EntitySet="HorarioMatricula" />
     </AssociationSet>
+    <AssociationSet Name="EstudianteMatricula" Association="modelo_plantel.Store.EstudianteMatricula">
+      <End Role="Estudiante" EntitySet="Estudiantes" />
+      <End Role="Matricula" EntitySet="Matriculas" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Usuarios">
     <Key>
@@ -137,6 +141,7 @@
     <Property Name="JornadaId" Type="int" Nullable="false" />
     <Property Name="CursoId" Type="int" Nullable="false" />
     <Property Name="ProfesorAsignaturaId" Type="int" Nullable="false" />
+    <Property Name="EstudianteId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Profesores">
     <Key>
@@ -434,6 +439,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="EstudianteMatricula">
+    <End Role="Estudiante" Type="modelo_plantel.Store.Estudiantes" Multiplicity="1" />
+    <End Role="Matricula" Type="modelo_plantel.Store.Matriculas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Estudiante">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Matricula">
+        <PropertyRef Name="EstudianteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -549,6 +566,10 @@
             <End Role="Horario" EntitySet="Horarios" />
             <End Role="HorarioMatricula" EntitySet="HorarioMatricula" />
           </AssociationSet>
+          <AssociationSet Name="EstudianteMatricula" Association="modelo_plantel.EstudianteMatricula">
+            <End Role="Estudiante" EntitySet="Estudiantes" />
+            <End Role="Matricula" EntitySet="Matriculas" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Usuario">
           <Key>
@@ -615,6 +636,8 @@
           <Property Name="ProfesorAsignaturaId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Asistencia" Relationship="modelo_plantel.MatriculaAsistencia" FromRole="Matricula" ToRole="Asistencia" />
           <NavigationProperty Name="HorarioMatricula" Relationship="modelo_plantel.MatriculaHorarioMatricula" FromRole="Matricula" ToRole="HorarioMatricula" />
+          <NavigationProperty Name="Estudiante" Relationship="modelo_plantel.EstudianteMatricula" FromRole="Matricula" ToRole="Estudiante" />
+          <Property Name="EstudianteId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Profesor">
           <Key>
@@ -647,6 +670,7 @@
           <Property Name="UsuarioId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Notificacion" Relationship="modelo_plantel.EstudianteNotificacion" FromRole="Estudiante" ToRole="Notificacion" />
           <NavigationProperty Name="EstudiantePadre" Relationship="modelo_plantel.EstudianteEstudiantePadre" FromRole="Estudiante" ToRole="EstudiantePadre" />
+          <NavigationProperty Name="Matricula" Relationship="modelo_plantel.EstudianteMatricula" FromRole="Estudiante" ToRole="Matricula" />
         </EntityType>
         <EntityType Name="Padre">
           <Key>
@@ -940,6 +964,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="EstudianteMatricula">
+          <End Type="modelo_plantel.Estudiante" Role="Estudiante" Multiplicity="1" />
+          <End Type="modelo_plantel.Matricula" Role="Matricula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estudiante">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Matricula">
+              <PropertyRef Name="EstudianteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1000,6 +1036,7 @@
           <ScalarProperty Name="JornadaId" ColumnName="JornadaId" />
           <ScalarProperty Name="CursoId" ColumnName="CursoId" />
           <ScalarProperty Name="ProfesorAsignaturaId" ColumnName="ProfesorAsignaturaId" />
+          <ScalarProperty Name="EstudianteId" ColumnName="EstudianteId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

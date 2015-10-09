@@ -295,6 +295,7 @@
     <Content Include="Scripts\indexCursos.js" />
     <Content Include="Scripts\indexEstudiante.js" />
     <Content Include="Scripts\indexJornada.js" />
+    <Content Include="Scripts\indexMatricula.js" />
     <Content Include="Scripts\indexPadres.js" />
     <Content Include="Scripts\indexProfesor.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
@@ -319,6 +320,7 @@
     <Content Include="Sitio WEB\ControlCursos.html" />
     <Content Include="Sitio WEB\ControlEstudiante.html" />
     <Content Include="Sitio WEB\ControlJornadas.html" />
+    <Content Include="Sitio WEB\ControlMatricula.html" />
     <Content Include="Sitio WEB\ControlPadres.html" />
     <Content Include="Sitio WEB\ControlProfesor.html" />
     <Content Include="Sitio WEB\index.html" />

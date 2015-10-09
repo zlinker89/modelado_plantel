@@ -25,11 +25,13 @@ namespace Modelado
         public int JornadaId { get; set; }
         public int CursoId { get; set; }
         public int ProfesorAsignaturaId { get; set; }
+        public int EstudianteId { get; set; }
     
         public virtual Jornada Jornada { get; set; }
         public virtual Curso Curso { get; set; }
         public virtual ProfesorAsignatura ProfesorAsignatura { get; set; }
         public virtual ICollection<Asistencia> Asistencia { get; set; }
         public virtual ICollection<HorarioMatricula> HorarioMatricula { get; set; }
+        public virtual Estudiante Estudiante { get; set; }
     }
 }

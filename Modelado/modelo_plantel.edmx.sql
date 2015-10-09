@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/08/2015 16:42:17
+-- Date Created: 10/08/2015 17:30:40
 -- Generated from EDMX file: D:\PROYECTOS VISUAL STUDIO 2013\modelado_plantel\Modelado\modelo_plantel.edmx
 -- --------------------------------------------------
 
@@ -59,6 +59,15 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_PadreEstudiantePadre]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[EstudiantePadreSet] DROP CONSTRAINT [FK_PadreEstudiantePadre];
 GO
+IF OBJECT_ID(N'[dbo].[FK_MatriculaHorarioMatricula]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[HorarioMatricula] DROP CONSTRAINT [FK_MatriculaHorarioMatricula];
+GO
+IF OBJECT_ID(N'[dbo].[FK_HorarioHorarioMatricula]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[HorarioMatricula] DROP CONSTRAINT [FK_HorarioHorarioMatricula];
+GO
+IF OBJECT_ID(N'[dbo].[FK_EstudianteMatricula]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Matriculas] DROP CONSTRAINT [FK_EstudianteMatricula];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -105,6 +114,12 @@ IF OBJECT_ID(N'[dbo].[sysdiagrams]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[EstudiantePadreSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[EstudiantePadreSet];
+GO
+IF OBJECT_ID(N'[dbo].[Horarios]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Horarios];
+GO
+IF OBJECT_ID(N'[dbo].[HorarioMatricula]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[HorarioMatricula];
 GO
 
 -- --------------------------------------------------
@@ -158,7 +173,8 @@ CREATE TABLE [dbo].[Matriculas] (
     [fecha_matricula] nvarchar(max)  NOT NULL,
     [JornadaId] int  NOT NULL,
     [CursoId] int  NOT NULL,
-    [ProfesorAsignaturaId] int  NOT NULL
+    [ProfesorAsignaturaId] int  NOT NULL,
+    [EstudianteId] int  NOT NULL
 );
 GO
 
@@ -592,6 +608,20 @@ ADD CONSTRAINT [FK_HorarioHorarioMatricula]
 CREATE INDEX [IX_FK_HorarioHorarioMatricula]
 ON [dbo].[HorarioMatricula]
     ([HorarioId]);
+GO
+
+-- Creating foreign key on [EstudianteId] in table 'Matriculas'
+ALTER TABLE [dbo].[Matriculas]
+ADD CONSTRAINT [FK_EstudianteMatricula]
+    FOREIGN KEY ([EstudianteId])
+    REFERENCES [dbo].[Estudiantes]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_EstudianteMatricula'
+CREATE INDEX [IX_FK_EstudianteMatricula]
+ON [dbo].[Matriculas]
+    ([EstudianteId]);
 GO
 
 -- --------------------------------------------------

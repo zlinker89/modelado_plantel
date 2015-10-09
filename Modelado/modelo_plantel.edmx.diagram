@@ -37,6 +37,7 @@
         <EntityTypeShape EntityType="modelo_plantel.HorarioMatricula" Width="1.5" PointX="16.375" PointY="3.25" />
         <AssociationConnector Association="modelo_plantel.MatriculaHorarioMatricula" />
         <AssociationConnector Association="modelo_plantel.HorarioHorarioMatricula" />
+        <AssociationConnector Association="modelo_plantel.EstudianteMatricula" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
