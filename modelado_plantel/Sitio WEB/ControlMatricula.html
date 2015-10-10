@@ -63,62 +63,80 @@
                                             <button type="submit" class="btn btn-primary waves-light waves-effect">Consultar</button>
                                         </div>
                                     </div>
-                                    <!--ko if:detail_modificar()-->
+                            </form>
+
+                            <!--ko if:detail_modificar()-->
+                            <form class="s12" data-bind="submit: addMatricula">
+
+                                <div class="col row s12 l8">
+                                    <div class="col s12">
+                                        <div class="row col s12">
+                                            <div class="input-field col s12 m6">
+                                                <input id="nnombres" type="text" class="validate" data-bind="value:detail_modificar().nombres" required>
+                                                <label for="nnombres" class="active">Nombres:</label>
+                                            </div>
+                                            <div class="input-field col s12 m6">
+                                                <input id="napellidos" type="text" class="validate" data-bind="value:detail_modificar().apellidos" required>
+                                                <label for="napellidos" class="active">Apellidos:</label>
+                                            </div>
+                                        </div>
+                                        <div class="row col s12">
+                                            <div class="input-field col s12">
+                                                <input id="id" type="hidden" class="validate" data-bind="value:detail_modificar().Id" required>
+                                                <input id="uid" type="hidden" class="validate" data-bind="value:detail_modificar().UsuarioId" required>
+                                            </div>
+                                        </div>
+                                        <br class="hide-on-large-only" />
+                                        <div class="row col s12">
+                                            <h5>Asignaturas:</h5>
+                                            <!-- ko foreach: profesorasignatura -->
+                                            <input type="checkbox" data-bind="checkedValue: $data ,attr: {'id': Id}, checked: $root.chosenItems" />
+                                            <label data-bind="attr: {'for': Id}">
+                                                <span data-bind="text:nombreAsignatura"></span> --
+                                                <span data-bind="text:nombreProfesor"></span>
+                                                <span data-bind="text:apellidoProfesor"></span>
+                                            </label>
+                                            <br />
+                                            <!-- /ko -->
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col row s12 l4">
+                                    <br class="hide-on-large-only" />
                                     <div class="input-field col s12" style="z-index:2;">
                                         <select data-bind="options: jornadas, optionsText:'nombre_jornada', value: new_matricula.Jornada"></select>
                                         <label>Jornada:</label>
                                     </div>
                                     <div class="col s12">
+                                        <br class="hide-on-large-only" />
                                         <label>Cursos:</label>
                                         <select style="height:220px" class="browser-default" multiple="multiple" data-bind="options: cursos, optionsText:'nombre_curso', value: new_matricula.Curso" required></select>
                                     </div>
-                                    <br />
-                                    <div class="row col s12" data-bind="foreach: profesorasignatura">
-                                        <input type="checkbox" id="test5" />
-                                        <label for="test5"></label>
-                                    </div>
-                                    <!--/ko-->
-                                    <div id="progreso" class="s12 center">
-                                        <div class="preloader-wrapper big active">
-                                            <div class="spinner-layer spinner-blue">
-                                                <div class="circle-clipper left">
-                                                    <div class="circle"></div>
-                                                </div><div class="gap-patch">
-                                                    <div class="circle"></div>
-                                                </div><div class="circle-clipper right">
-                                                    <div class="circle"></div>
-                                                </div>
-                                            </div>
+                                </div>
+
+                                <div class="row col s12 center">
+                                    <button type="submit" class="btn btn-default">Crear Matricula</button>
+                                </div>
+                            </form>
+
+                            <!--/ko-->
+                            <div id="progreso" class="s12 center">
+                                <div class="preloader-wrapper big active">
+                                    <div class="spinner-layer spinner-blue">
+                                        <div class="circle-clipper left">
+                                            <div class="circle"></div>
+                                        </div><div class="gap-patch">
+                                            <div class="circle"></div>
+                                        </div><div class="circle-clipper right">
+                                            <div class="circle"></div>
                                         </div>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
+                            </div>
                         </div>
-                        <!-- ko if:detail_modificar() -->
-                        <div class="col s12">
-                            <form class="s12" >
-                                <div class="row col s12">
-                                    <div class="input-field col s12 m6">
-                                        <input id="nnombres" type="text" class="validate" data-bind="value:detail_modificar().nombres" required>
-                                        <label for="nnombres" class="active">Nombres:</label>
-                                    </div>
-                                    <div class="input-field col s12 m6">
-                                        <input id="napellidos" type="text" class="validate" data-bind="value:detail_modificar().apellidos" required>
-                                        <label for="napellidos" class="active">Apellidos:</label>
-                                    </div>
-                                </div>
-                                <div class="row col s12">
-                                    <div class="input-field col s12">
-                                        <input id="id" type="hidden" class="validate" data-bind="value:detail_modificar().Id" required>
-                                        <input id="uid" type="hidden" class="validate" data-bind="value:detail_modificar().UsuarioId" required>
-                                    </div>
-                                </div>
-                                <div class="row col s12 center">
-                                    <button type="submit" class="btn btn-default">Modificar</button>
-                                </div>
-                            </form>
-                        </div>
-                        <!-- /ko -->
+                        
                     </div>
                 </li>
             </ul>

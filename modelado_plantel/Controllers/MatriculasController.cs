@@ -11,6 +11,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Modelado;
 using modelado_plantel.Models;
+using modelado_plantel.DTO;
 
 namespace modelado_plantel.Controllers
 {
@@ -19,9 +20,19 @@ namespace modelado_plantel.Controllers
         private modelado_plantelContext db = new modelado_plantelContext();
 
         // GET: api/Matriculas
-        public IQueryable<Matricula> GetMatriculas()
+        public IQueryable<MatriculaDTO> GetMatriculas()
         {
-            return db.Matriculas;
+            var matricula = from m in db.Matriculas
+                            select new MatriculaDTO()
+                            {
+                                Id = m.Id,
+                                CursoId = m.CursoId,
+                                EstudianteId = m.EstudianteId,
+                                fecha_matricula = m.fecha_matricula,
+                                JornadaId = m.JornadaId,
+                                ProfesorAsignaturaId = m.ProfesorAsignaturaId
+                            };
+            return matricula;
         }
 
         // GET: api/Matriculas/5
