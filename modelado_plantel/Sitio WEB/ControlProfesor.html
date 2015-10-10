@@ -113,7 +113,7 @@
                     </div>
                 </li>
                 <li>
-                    <div class="collapsible-header"><i class="material-icons">search</i>Buscar por documento</div>
+                    <div class="collapsible-header active"><i class="material-icons">search</i>Buscar por documento</div>
                     <div class="collapsible-body">
                         <div class="col s12">
                             <form class="s12 form-inline" data-bind="submit: consultaProfesor">
@@ -149,7 +149,29 @@
                             </form>
                         </div>
                         <!-- ko if:detail_modificar() -->
-                        <div class="col s12">
+                        <div class="row col s12 l4">
+                            <h5 class="center">Enlazar profesor con asignatura</h5>
+                            <form class="s12" data-bind="submit: enlaceProfesorAsignatura">
+                                <div class="input-field col s12">
+                                    <select data-bind="options:asignaturas , optionsText: 'nombre_asignatura', value: newAsignaturaProfesor.Asignatura"></select>
+                                    <label>Asignatura</label>
+                                </div>
+                                <div class="row col s12 center">
+                                    <button type="submit" class="btn btn-default">Enlazar</button>
+                                </div>
+                            </form>
+                            <div class="row col s12">
+                                <h6>Asignaturas asignadas:</h6>
+                                <ul class="collection" data-bind="foreach: asignaturaprodesor">
+                                    <li class="collection-item">
+                                        <span data-bind="text: nombreAsignatura"></span>
+                                        <a href="#modal1" class="secondary-content" data-bind="click: $parent.deleteAsignaturaProfesor"><i class="material-icons">delete</i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col s12 l8">
+                            <hr class="hide-on-large-only" />
                             <form class="s12" data-bind="submit: updateProfesor">
                                 <div class="row col s12">
                                     <div class="input-field col s12 m6">

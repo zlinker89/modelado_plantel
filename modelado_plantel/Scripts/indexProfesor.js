@@ -1,15 +1,21 @@
 ﻿var ViewModel = function () {
     var self = this;
     self.usuarios = ko.observableArray();
+    self.asignaturas = ko.observableArray();
     self.profesores = ko.observableArray();
+    self.asignaturaprodesor = ko.observableArray();
     // profesores
     self.detail = ko.observableArray();
     self.detail_modificar = ko.observable();
-
     self.error = ko.observable();
+    self.newAsignaturaProfesor = {
+        Asignatura: ko.observable()
+    }
 
     var usuariosUri = '/api/Usuarios/';
+    var asignaturasUri = '/api/Asignaturas/';
     var profesoresUri = '/api/Profesors/';
+    var asignaturaprofesorUri = '/api/ProfesorAsignaturas/';
 
     function ajaxHelper(uri, method, data) {
         self.error(''); // Clear error message
@@ -44,7 +50,19 @@
         });
     }
 
+    function getAllAsignaturas() {
+        ajaxHelper(asignaturasUri, 'GET').done(function (data) {
+            $('#progreso').hide();
+            self.asignaturas(data);
+        });
+    }
 
+    function getAllAsignaturaProfesor() {
+        ajaxHelper(asignaturaprofesorUri, 'GET').done(function (data) {
+            $('#progreso').hide();
+            self.asignaturaprodesor(data);
+        });
+    }
     // zzzzzzzzzzzzzzzzzzzzzz-----------------------------Funciones para profesores
     self.addProfesor = function () {
         var nombres = $('#nombres').val();
@@ -205,25 +223,85 @@
         }
     }
     self.consultaProfesor = function () {
+        self.asignaturaprodesor.removeAll();
         ajaxHelper(profesoresUri, 'GET').done(function (profesores) {
             var documento = $('#numero').val();
             var encontrado = false;
             for (p in profesores) {
                 if (profesores[p].ndocumento === documento) {
                     self.detail_modificar(profesores[p]);
+                    // ----------- Filtrar Relacion asignatura profesor
+                    var pid = profesores[p].Id;
+                   // getAllAsignaturaProfesor(); // aqui obtengo todas las relaciones
+                    ajaxHelper(asignaturaprofesorUri, 'GET').done(function (AsignaturaProfesor) {
+                        $('#progreso').hide();
+                        // esto sirver para filtrar relaciones
+                        for (ap in AsignaturaProfesor) {
+                            if (AsignaturaProfesor[ap].ProfesorId == pid) {
+                                self.asignaturaprodesor.push(AsignaturaProfesor[ap]); // filtro las asignaturas por profesor
+                            }
+                        }
+                    });
+                    $('select').material_select();
                     encontrado = true;
                 }
             }
-            $('#progreso').hide();
             if (!encontrado) {
                 Materialize.toast("No existe este profesor para mostrar. ");
+                $('#progreso').hide();
+                self.detail_modificar(null);
             }
         });
     }
     // zzzzzzzzzzzzzzzzzzzz------------------------FIN funciones para profesores
 
+    //--------------------->>>>>>>>>>>>>>>>>>>>>>>> ENLACE
+    self.enlaceProfesorAsignatura = function () {
+        var pid = $("#id").val();
+        var aid = self.newAsignaturaProfesor.Asignatura().Id;
+        var cont = 0;
+        ajaxHelper(asignaturaprofesorUri, 'GET').done(function (AsignaturaProfesor) {
+            
+            $('#progreso').hide();
+            for (ap in AsignaturaProfesor) {
+                if (AsignaturaProfesor[ap].ProfesorId == pid && AsignaturaProfesor[ap].AsignaturaId == aid) {
+                    cont++;
+                }
+            }
+            if (cont > 0) {
+                Materialize.toast("Este profesor ya posee esta asignatura. ");
+            } else {
+                var asigprofe = {
+                    Id: pid,
+                    ProfesorId: pid,
+                    AsignaturaId: aid
+                };
+                ajaxHelper(asignaturaprofesorUri, 'POST', asigprofe).done(function (ap) {
+                    self.detail_modificar(null);
+                    getAllAsignaturaProfesor();
+                    self.asignaturaprodesor.push(ap);
+                    Materialize.toast("Enlace exitoso. ");
+                });
+            }
+            $('#progreso').hide();
+
+        });
+    }
+    self.deleteAsignaturaProfesor = function (AsigProfe) {
+        if(confirm("¿Desea eliminar esta relacion?")){
+            ajaxHelper(asignaturaprofesorUri + AsigProfe.Id, 'DELETE').done(function () {
+                Materialize.toast("Se ha borrado a " + AsigProfe.nombreAsignatura + ". ");
+                self.asignaturaprodesor.remove(AsigProfe);
+                $('#progreso').hide();
+            });
+        }
+    }
+    //--------------------->>>>>>>>>>>>>>>>>>>>>>>> FIN ENLACE
+
+
     // cargamos para mostrar
     getAllProfesores();
+    getAllAsignaturas();
 };
 
 ko.applyBindings(new ViewModel());

@@ -11,6 +11,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Modelado;
 using modelado_plantel.Models;
+using modelado_plantel.DTO;
 
 namespace modelado_plantel.Controllers
 {
@@ -19,9 +20,19 @@ namespace modelado_plantel.Controllers
         private modelado_plantelContext db = new modelado_plantelContext();
 
         // GET: api/ProfesorAsignaturas
-        public IQueryable<ProfesorAsignatura> GetProfesorAsignaturas()
+        public IQueryable<ProfesorAsignaturasDTO> GetProfesorAsignaturas()
         {
-            return db.ProfesorAsignaturas;
+            var profesorasignatura = from ps in db.ProfesorAsignaturas
+                                     select new ProfesorAsignaturasDTO()
+                                     {
+                                         Id = ps.Id,
+                                         ProfesorId = ps.ProfesorId,
+                                         AsignaturaId = ps.AsignaturaId,
+                                         nombreAsignatura = ps.Asignatura.nombre_asignatura,
+                                         nombreProfesor = ps.Profesor.nombres,
+                                         apellidoProfesor = ps.Profesor.apellidos
+                                     };
+            return profesorasignatura;
         }
 
         // GET: api/ProfesorAsignaturas/5

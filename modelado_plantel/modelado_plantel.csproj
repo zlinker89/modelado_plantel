@@ -217,9 +217,11 @@
     <Compile Include="Controllers\ProfesorsController.cs" />
     <Compile Include="Controllers\UsuariosController.cs" />
     <Compile Include="DTO\AdminDTO.cs" />
+    <Compile Include="DTO\AsignaturaDTO.cs" />
     <Compile Include="DTO\EstudianteDTO.cs" />
     <Compile Include="DTO\PadreDTO.cs" />
     <Compile Include="DTO\PadreEstudianteDTO.cs" />
+    <Compile Include="DTO\ProfesorAsignaturasDTO.cs" />
     <Compile Include="DTO\ProfesorDTO.cs" />
     <Compile Include="DTO\UsuarioDTO.cs" />
     <Compile Include="Global.asax.cs">
