@@ -11,6 +11,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Modelado;
 using modelado_plantel.Models;
+using modelado_plantel.DTO;
 
 namespace modelado_plantel.Controllers
 {
@@ -19,9 +20,15 @@ namespace modelado_plantel.Controllers
         private modelado_plantelContext db = new modelado_plantelContext();
 
         // GET: api/Jornadas
-        public IQueryable<Jornada> GetJornadas()
+        public IQueryable<JornadaDTO> GetJornadas()
         {
-            return db.Jornadas;
+            var jornadas = from j in db.Jornadas
+                           select new JornadaDTO()
+                           {
+                               Id = j.Id,
+                               nombre_jornada = j.nombre_jornada
+                           };
+            return jornadas;
         }
 
         // GET: api/Jornadas/5

@@ -47,10 +47,8 @@
             <div class="col s1 links"><a href="admin.html" class="tooltipped" data-delay="50" data-tooltip="Volver"><i class="small material-icons">skip_previous</i></a></div>
         </div>
         <div class="row">
-            <ul class="collapsible" data-collapsible="accordion">
-                <li>
-                    <div class="collapsible-header active"><i class="material-icons">search</i>Buscar por documento</div>
-                    <div class="collapsible-body">
+                    <div class="panel"><i class="material-icons">search</i>Buscar por documento</div>
+                    <div class="panel-body">
                         <div class="col s12">
                             <form class="s12 form-inline" data-bind="submit: consultaEstudiante">
                                 <div class="row col s12">
@@ -63,6 +61,7 @@
                                             <button type="submit" class="btn btn-primary waves-light waves-effect">Consultar</button>
                                         </div>
                                     </div>
+                                 </div>
                             </form>
 
                             <!--ko if:detail_modificar()-->
@@ -104,19 +103,19 @@
                                 </div>
                                 <div class="col row s12 l4">
                                     <br class="hide-on-large-only" />
+                                    <div class="input-field col s12" style="z-index:3;">
+                                        <br class=" hide-on-large-only" />
+                                        <select style="height:220px" class="" data-bind="options: cursos, optionsText:'nombre_curso', value: new_matricula.Curso"></select>
+                                        <label>Cursos:</label>
+                                    </div>
                                     <div class="input-field col s12" style="z-index:2;">
                                         <select data-bind="options: jornadas, optionsText:'nombre_jornada', value: new_matricula.Jornada"></select>
                                         <label>Jornada:</label>
                                     </div>
-                                    <div class="col s12">
-                                        <br class="hide-on-large-only" />
-                                        <label>Cursos:</label>
-                                        <select style="height:220px" class="browser-default" multiple="multiple" data-bind="options: cursos, optionsText:'nombre_curso', value: new_matricula.Curso" required></select>
-                                    </div>
                                 </div>
 
                                 <div class="row col s12 center">
-                                    <button type="submit" class="btn btn-default">Crear Matricula</button>
+                                    <button type="submit" class="btn btn-default waves-effect waves-light">Crear Matricula</button>
                                 </div>
                             </form>
 
@@ -138,10 +137,7 @@
                         </div>
                         
                     </div>
-                </li>
-            </ul>
         </div>
-    </div>
 
     <!--Import jQuery before materialize.js-->
     <script src="../Scripts/jquery-2.1.4.min.js"></script>

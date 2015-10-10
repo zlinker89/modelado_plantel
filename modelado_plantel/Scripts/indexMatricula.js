@@ -113,38 +113,45 @@
             var fecha_registro = d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
             var profesoresasignaturas = self.chosenItems();
 
-            for (pa in profesoresasignaturas) {
-                var Matricula = {
-                    Id: $('#id').val(),
-                    fecha_matricula: fecha_registro,
-                    JornadaId: self.new_matricula.Jornada().Id,
-                    CursoId: self.new_matricula.Curso().Id,
-                    ProfesorAsignaturaId: profesoresasignaturas[pa].Id,
-                    EstudianteId: $('#id').val()
-                }
-
+            if (profesoresasignaturas.length !== 0) {
                 ajaxHelper(matriculaUri, 'GET').done(function (matriculas) {
-                    var cont = 0;
-                    for(m in matriculas){
-                        if (Matricula.JornadaId == matriculas[m].JornadaId && Matricula.CursoId == matriculas[m].CursoId && Matricula.ProfesorAsignaturaId == matriculas[m].ProfesorAsignaturaId && Matricula.EstudianteId == matriculas[m].EstudianteId) {
-                            cont++;
+                    
+                    for (pa in profesoresasignaturas) {
+                        var Matricula = {
+                            Id: $('#id').val(),
+                            fecha_matricula: fecha_registro,
+                            JornadaId: self.new_matricula.Jornada().Id,
+                            CursoId: self.new_matricula.Curso().Id,
+                            ProfesorAsignaturaId: profesoresasignaturas[pa].Id,
+                            EstudianteId: $('#id').val()
                         }
+                    
+                            // creo el objeto matricula, analizo si existe en la base de datos, si existe no se guarda
+                        var bandera = true;
+                        for (m in matriculas) {
+                            if (Matricula.JornadaId == matriculas[m].JornadaId && Matricula.CursoId == matriculas[m].CursoId && Matricula.ProfesorAsignaturaId == matriculas[m].ProfesorAsignaturaId && Matricula.EstudianteId == matriculas[m].EstudianteId) {
+                                Materialize.toast("Ya exite una matricula con " + profesoresasignaturas[pa].nombreProfesor + " " + profesoresasignaturas[pa].apellidoProfesor + ". ", 1000);
+                                bandera = false;
+                                break;
+                            }
+                        };
+                        if(bandera){
+                            // aqui se genera la matricula
+                            ajaxHelper(matriculaUri, 'POST', Matricula).done(function () {
+                                Materialize.toast("Maticula Realizada con exito. ", 2000);
+                                $('#progreso').hide();
+
+                            });
+                        }
+
+                    
                     }
-                    if(cont > 0){
-                        Materialize.toast("Ya exite una matricula con " + profesoresasignaturas[pa].nombreProfesor + " " + profesoresasignaturas[pa].apellidoProfesor + ". ", 1000);
-                    } else {
-
-                        // aqui se genera la matricula
-                        ajaxHelper(matriculaUri, 'POST', Matricula).done(function () {
-                            Materialize.toast("Maticula Realizada con exito. ", 2000);
-                            $('#progreso').hide();
-
-                        });
-                    }
-
                 });
-
+                
+            } else {
+                Materialize.toast("Debe seleccionar minimo un profesor. ", 2000);
             }
+            
             $('#progreso').hide();
 
         }catch(e){

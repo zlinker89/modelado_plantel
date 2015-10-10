@@ -11,6 +11,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Modelado;
 using modelado_plantel.Models;
+using modelado_plantel.DTO;
 
 namespace modelado_plantel.Controllers
 {
@@ -19,9 +20,15 @@ namespace modelado_plantel.Controllers
         private modelado_plantelContext db = new modelado_plantelContext();
 
         // GET: api/Cursoes
-        public IQueryable<Curso> GetCursoes()
+        public IQueryable<CursoDTO> GetCursoes()
         {
-            return db.Cursoes;
+            var cursos = from c in db.Cursoes
+                         select new CursoDTO()
+                         {
+                             Id = c.Id,
+                             nombre_curso = c.nombre_curso
+                         };
+            return cursos;
         }
 
         // GET: api/Cursoes/5

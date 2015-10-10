@@ -218,7 +218,9 @@
     <Compile Include="Controllers\UsuariosController.cs" />
     <Compile Include="DTO\AdminDTO.cs" />
     <Compile Include="DTO\AsignaturaDTO.cs" />
+    <Compile Include="DTO\CursoDTO.cs" />
     <Compile Include="DTO\EstudianteDTO.cs" />
+    <Compile Include="DTO\JornadaDTO.cs" />
     <Compile Include="DTO\MatriculaDTO.cs" />
     <Compile Include="DTO\PadreDTO.cs" />
     <Compile Include="DTO\PadreEstudianteDTO.cs" />
