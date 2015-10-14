@@ -71,11 +71,11 @@
                                     <div class="col s12">
                                         <div class="row col s12">
                                             <div class="input-field col s12 m6">
-                                                <input id="nnombres" type="text" class="validate" data-bind="value:detail_modificar().nombres" required>
+                                                <input id="nnombres" type="text" class="validate" data-bind="value:detail_modificar().nombres" readonly required>
                                                 <label for="nnombres" class="active">Nombres:</label>
                                             </div>
                                             <div class="input-field col s12 m6">
-                                                <input id="napellidos" type="text" class="validate" data-bind="value:detail_modificar().apellidos" required>
+                                                <input id="napellidos" type="text" class="validate" data-bind="value:detail_modificar().apellidos" readonly required>
                                                 <label for="napellidos" class="active">Apellidos:</label>
                                             </div>
                                         </div>
@@ -135,9 +135,40 @@
                             </div>
                             </div>
                         </div>
-                        
-                    </div>
+            <!--ko if:detail_modificar()-->
+            <div class="col row s12">
+                <hr />
+                <h5>Matriculas realizadas:</h5>
+                <table class="responsive-table">
+                    <thead>
+                        <tr>
+                            <th>Profesor</th>
+                            <th>Asignatura</th>
+                            <th>Curso</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: matriculas">
+                        <tr>
+                            <td>
+                                <span data-bind="text: nombreProfesor"></span> <span data-bind="text: apellidoProfesor"></span>
+                            </td>
+                            <td>
+                                <span data-bind="text: asignatura"></span>
+                            </td>
+                            <td>
+                                <span data-bind="text: curso"></span>
+                            </td>
+                            <td>
+                                <a href="#!" data-bind="click: $parent.deleteMatricula"><i class="material-icons">delete</i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>   
+            <!--/ko-->  
         </div>
+    </div>
 
     <!--Import jQuery before materialize.js-->
     <script src="../Scripts/jquery-2.1.4.min.js"></script>

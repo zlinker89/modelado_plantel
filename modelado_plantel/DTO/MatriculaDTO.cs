@@ -13,5 +13,9 @@ namespace modelado_plantel.DTO
         public int CursoId { get; set; }
         public int ProfesorAsignaturaId { get; set; }
         public int EstudianteId { get; set; }
+        public string nombreProfesor { get; set; }
+        public string apellidoProfesor { get; set; }
+        public string curso { get; set; }
+        public string asignatura { get; set; }
     }
 }

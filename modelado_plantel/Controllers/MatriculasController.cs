@@ -30,7 +30,11 @@ namespace modelado_plantel.Controllers
                                 EstudianteId = m.EstudianteId,
                                 fecha_matricula = m.fecha_matricula,
                                 JornadaId = m.JornadaId,
-                                ProfesorAsignaturaId = m.ProfesorAsignaturaId
+                                ProfesorAsignaturaId = m.ProfesorAsignaturaId,
+                                curso = m.Curso.nombre_curso,
+                                asignatura = m.ProfesorAsignatura.Asignatura.nombre_asignatura,
+                                nombreProfesor = m.ProfesorAsignatura.Profesor.nombres,
+                                apellidoProfesor = m.ProfesorAsignatura.Profesor.apellidos
                             };
             return matricula;
         }

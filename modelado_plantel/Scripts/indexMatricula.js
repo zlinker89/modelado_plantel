@@ -89,11 +89,24 @@
     // aaaaaaaaaaaaaaaaaaa---------------------- Funciones para Matriculas
     
     self.consultaEstudiante = function () {
+        self.detail_modificar(null);
+        self.chosenItems.removeAll();
         ajaxHelper(estudiantesUri, 'GET').done(function (estudiantes) {
             var documento = $('#numero').val();
             var encontrado = false;
             for (e in estudiantes) {
                 if (estudiantes[e].ndocumento === documento) {
+                    var EstudianteId = estudiantes[e].Id;
+                    // listamos las matriculas hechas para este estudiante
+                    ajaxHelper(matriculaUri, 'GET').done(function (matri) {
+                        self.matriculas.removeAll();
+                        $('#progreso').hide();
+                        for (m in matri) {
+                            if (matri[m].EstudianteId == EstudianteId) {
+                                self.matriculas.push(matri[m]);
+                            }
+                        }
+                    });
                     self.detail_modificar(estudiantes[e]);
                     $('select').material_select();
                     encontrado = true;
@@ -137,10 +150,10 @@
                         };
                         if(bandera){
                             // aqui se genera la matricula
-                            ajaxHelper(matriculaUri, 'POST', Matricula).done(function () {
+                            ajaxHelper(matriculaUri, 'POST', Matricula).done(function (m) {
                                 Materialize.toast("Maticula Realizada con exito. ", 2000);
                                 $('#progreso').hide();
-
+                                self.detail_modificar(null);
                             });
                         }
 
@@ -159,6 +172,16 @@
         }
         $('#progreso').hide();
 
+    }
+
+    function deleteMatricula(matricula) {
+        if(confirm("¿Desea eliminar esta matricula?")){
+            ajaxHelper(matriculaUri + matricula.Id, 'DELETE').done(function () {
+                self.matriculas.remove(matricula);
+                Materialize.toast("Matricula eliminada. ", 2000);
+                $('#progreso').hide();
+            });
+        }
     }
     // aaaaaaaaaaaaaaaaaaa----------------FIN------ Funciones para Matriculas
 
